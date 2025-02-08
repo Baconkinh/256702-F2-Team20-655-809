@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Credit {
+
     public void Credit() {
         getGameScene().clearUINodes();
         Button Backbtn = new Button("Back");
@@ -29,11 +30,11 @@ public class Credit {
         infoBox.setTranslateY(150);
 
         Text tutorialText = new Text(
-                "Presentation By\n\n" +
-                        "   1. อัจฉรา ดังดี  6730300655\n" +
-                        "      ไม่ทำไรเลย\n" +
-                        "   2. ปภากร จันทร์ดี  6730300809\n" +
-                        "      แบกหมดทุกอย่าง");
+                "Presentation By\n\n"
+                + "   1. อัจฉรา ดังดี  6730300655\n"
+                + "      ตกแต่งหน้า UI , ทำรูปภาพประกอบเกม , ออกแบบสกิลตัวละคร\n"
+                + "   2. ปภากร จันทร์ดี  6730300809\n"
+                + "      จัดหน้า UI , เพิ่มฟังก์ชันต่างๆ , ออกแบบรูปแบบการเล่น");
 
         tutorialText.setFont(Font.font("Tahoma", 32));
         tutorialText.setFill(Color.DARKBLUE);
