@@ -39,14 +39,14 @@ public class App extends GameApplication {
         Credit C = new Credit();
 
         // background 
-        Image imagebg = getAssetLoader().loadImage("1.jpg");
+        Image imagebg = getAssetLoader().loadImage("real.jpg");
         ImageView background = new ImageView(imagebg);
         background.setFitWidth(getAppWidth());
         background.setFitHeight(getAppHeight());
         getGameScene().addUINode(background);
 
         // title Tournament
-        Text title = new Text("Tournament");
+        /***Text title = new Text("Tournament");
         // โหลดฟอนต์จาก assets/ui/Migra-Extrabold.ttf
         Font migraFont = Font.loadFont(getClass().getResource("/assets/ui/Migra-Extrabold.ttf").toExternalForm(), 72);
         title.setFont(migraFont);
@@ -76,7 +76,7 @@ public class App extends GameApplication {
         double titleCenterX2 = 550;
         double titleCenterY2 = 300;
         title2.setTranslateX(titleCenterX2);
-        title2.setTranslateY(titleCenterY2);
+        title2.setTranslateY(titleCenterY2);**/
         // button New Game
         Button btnStart = new Button("New Game");
         btnStart.setFont(Font.font(28));
@@ -154,9 +154,9 @@ public class App extends GameApplication {
         btnCredit.setPrefWidth(500);
         btnCredit.setPrefHeight(60);
         // แสดง UI
-        getGameScene().addUINode(title);
+        /*getGameScene().addUINode(title);
         getGameScene().addUINode(title1);
-        getGameScene().addUINode(title2);
+        getGameScene().addUINode(title2);*/
         getGameScene().addUINode(btnStart);
         getGameScene().addUINode(btnLoad);
         getGameScene().addUINode(btnTutorial);
