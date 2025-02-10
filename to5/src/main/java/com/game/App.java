@@ -1,6 +1,5 @@
 package com.game;
 
-
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
@@ -28,29 +27,29 @@ public class App extends GameApplication {
 
     @Override
     protected void initGame() {
-    Main();
+        Main();
     }
 
     public void Main() {
         getGameScene().clearUINodes();
-        
+
         NewGame n = new NewGame();
         LoadGame L = new LoadGame();
         Tutorial T = new Tutorial();
         Credit C = new Credit();
 
         // background 
-        Image imagebg = getAssetLoader().loadImage("3.jpg");
+        Image imagebg = getAssetLoader().loadImage("1.jpg");
         ImageView background = new ImageView(imagebg);
         background.setFitWidth(getAppWidth());
         background.setFitHeight(getAppHeight());
         getGameScene().addUINode(background);
- 
-
 
         // title Tournament
         Text title = new Text("Tournament");
-        title.setFont(Font.font(72));
+        // โหลดฟอนต์จาก assets/ui/Migra-Extrabold.ttf
+        Font migraFont = Font.loadFont(getClass().getResource("/assets/ui/Migra-Extrabold.ttf").toExternalForm(), 72);
+        title.setFont(migraFont);
         title.setStyle("-fx-fill: #FF6347; -fx-font-weight: bold;");
         double titleCenterX = 150;
         double titleCenterY = 150;
@@ -86,15 +85,15 @@ public class App extends GameApplication {
         btnStart.setTranslateX(centerX);
         btnStart.setTranslateY(centerY);
         btnStart.setOnAction(e -> n.NewGame());
-        btnStart.setStyle("-fx-text-fill: white; " +
-                "-fx-border-color: #1E90FF; " +
-                "-fx-border-width: 10; " +
-                "-fx-border-radius: 20; " +
-                "-fx-background-color: transparent; " +
-                "-fx-padding: 5; " +
-                "-fx-background-insets: 0, 10; " +
-                "-fx-border-insets: 0, 5; " +
-                "-fx-background-color: transparent, #00008B; ");
+        btnStart.setStyle("-fx-text-fill: white; "
+                + "-fx-border-color: #1E90FF; "
+                + "-fx-border-width: 10; "
+                + "-fx-border-radius: 20; "
+                + "-fx-background-color: transparent; "
+                + "-fx-padding: 5; "
+                + "-fx-background-insets: 0, 10; "
+                + "-fx-border-insets: 0, 5; "
+                + "-fx-background-color: transparent, #00008B; ");
         btnStart.setPrefWidth(500);
         btnStart.setPrefHeight(60);
         // button Load Game
@@ -105,15 +104,15 @@ public class App extends GameApplication {
         btnLoad.setTranslateX(centerX1);
         btnLoad.setTranslateY(centerY1);
         btnLoad.setOnAction(e -> L.LoadGame());
-        btnLoad.setStyle("-fx-text-fill: white; " +
-                "-fx-border-color: #1E90FF; " +
-                "-fx-border-width: 10; " +
-                "-fx-border-radius: 20; " +
-                "-fx-background-color: transparent; " +
-                "-fx-padding: 5; " +
-                "-fx-background-insets: 0, 10; " +
-                "-fx-border-insets: 0, 5; " +
-                "-fx-background-color: transparent, #00008B; ");
+        btnLoad.setStyle("-fx-text-fill: white; "
+                + "-fx-border-color: #1E90FF; "
+                + "-fx-border-width: 10; "
+                + "-fx-border-radius: 20; "
+                + "-fx-background-color: transparent; "
+                + "-fx-padding: 5; "
+                + "-fx-background-insets: 0, 10; "
+                + "-fx-border-insets: 0, 5; "
+                + "-fx-background-color: transparent, #00008B; ");
         btnLoad.setPrefWidth(500);
         btnLoad.setPrefHeight(60);
         //button Tutorial
@@ -124,34 +123,34 @@ public class App extends GameApplication {
         btnTutorial.setTranslateX(centerX2);
         btnTutorial.setTranslateY(centerY2);
         btnTutorial.setOnAction(e -> T.Tutorial());
-        btnTutorial.setStyle("-fx-text-fill: white; " +
-                "-fx-border-color: #1E90FF; " +
-                "-fx-border-width: 10; " +
-                "-fx-border-radius: 20; " +
-                "-fx-background-color: transparent; " +
-                "-fx-padding: 5; " +
-                "-fx-background-insets: 0, 10; " +
-                "-fx-border-insets: 0, 5; " +
-                "-fx-background-color: transparent, #00008B; ");
+        btnTutorial.setStyle("-fx-text-fill: white; "
+                + "-fx-border-color: #1E90FF; "
+                + "-fx-border-width: 10; "
+                + "-fx-border-radius: 20; "
+                + "-fx-background-color: transparent; "
+                + "-fx-padding: 5; "
+                + "-fx-background-insets: 0, 10; "
+                + "-fx-border-insets: 0, 5; "
+                + "-fx-background-color: transparent, #00008B; ");
         btnTutorial.setPrefWidth(500);
         btnTutorial.setPrefHeight(60);
         // button Credit
         Button btnCredit = new Button("Credit");
-btnCredit.setFont(Font.font(28));
+        btnCredit.setFont(Font.font(28));
         double centerX3 = 300;
         double centerY3 = 590;
         btnCredit.setTranslateX(centerX3);
         btnCredit.setTranslateY(centerY3);
         btnCredit.setOnAction(e -> C.Credit());
-        btnCredit.setStyle("-fx-text-fill: white; " +
-                "-fx-border-color: #1E90FF; " +
-                "-fx-border-width: 10; " +
-                "-fx-border-radius: 20; " +
-                "-fx-background-color: transparent; " +
-                "-fx-padding: 5; " +
-                "-fx-background-insets: 0, 10; " +
-                "-fx-border-insets: 0, 5; " +
-                "-fx-background-color: transparent, #00008B; ");
+        btnCredit.setStyle("-fx-text-fill: white; "
+                + "-fx-border-color: #1E90FF; "
+                + "-fx-border-width: 10; "
+                + "-fx-border-radius: 20; "
+                + "-fx-background-color: transparent; "
+                + "-fx-padding: 5; "
+                + "-fx-background-insets: 0, 10; "
+                + "-fx-border-insets: 0, 5; "
+                + "-fx-background-color: transparent, #00008B; ");
         btnCredit.setPrefWidth(500);
         btnCredit.setPrefHeight(60);
         // แสดง UI
