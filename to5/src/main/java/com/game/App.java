@@ -1,11 +1,17 @@
 package com.game;
 
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
+import static com.almasb.fxgl.dsl.FXGL.getAssetLoader;
 import static com.almasb.fxgl.dsl.FXGL.getGameScene;
 
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -27,12 +33,21 @@ public class App extends GameApplication {
 
     public void Main() {
         getGameScene().clearUINodes();
+        
         NewGame n = new NewGame();
         LoadGame L = new LoadGame();
         Tutorial T = new Tutorial();
         Credit C = new Credit();
 
-        getGameScene().setBackgroundColor(Color.rgb(173, 216, 230)); // background color
+        // background 
+        Image imagebg = getAssetLoader().loadImage("3.jpg");
+        ImageView background = new ImageView(imagebg);
+        background.setFitWidth(getAppWidth());
+        background.setFitHeight(getAppHeight());
+        getGameScene().addUINode(background);
+ 
+
+
         // title Tournament
         Text title = new Text("Tournament");
         title.setFont(Font.font(72));
