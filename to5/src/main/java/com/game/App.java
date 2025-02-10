@@ -8,12 +8,9 @@ import static com.almasb.fxgl.dsl.FXGL.getAssetLoader;
 import static com.almasb.fxgl.dsl.FXGL.getGameScene;
 
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class App extends GameApplication {
 
@@ -77,11 +74,13 @@ public class App extends GameApplication {
         double titleCenterY2 = 300;
         title2.setTranslateX(titleCenterX2);
         title2.setTranslateY(titleCenterY2);**/
+
+        
         // button New Game
         Button btnStart = new Button("New Game");
         btnStart.setFont(Font.font(28));
-        double centerX = 300;
-        double centerY = 350;
+        double centerX = 295;
+        double centerY = 280;
         btnStart.setTranslateX(centerX);
         btnStart.setTranslateY(centerY);
         btnStart.setOnAction(e -> n.NewGame());
@@ -96,11 +95,12 @@ public class App extends GameApplication {
                 + "-fx-background-color: transparent, #00008B; ");
         btnStart.setPrefWidth(500);
         btnStart.setPrefHeight(60);
+
         // button Load Game
         Button btnLoad = new Button("Load Game");
         btnLoad.setFont(Font.font(28));
         double centerX1 = 300;
-        double centerY1 = 430;
+        double centerY1 = 365;
         btnLoad.setTranslateX(centerX1);
         btnLoad.setTranslateY(centerY1);
         btnLoad.setOnAction(e -> L.LoadGame());
@@ -115,11 +115,12 @@ public class App extends GameApplication {
                 + "-fx-background-color: transparent, #00008B; ");
         btnLoad.setPrefWidth(500);
         btnLoad.setPrefHeight(60);
+
         //button Tutorial
         Button btnTutorial = new Button("Tutorial");
         btnTutorial.setFont(Font.font(28));
         double centerX2 = 300;
-        double centerY2 = 510;
+        double centerY2 = 450;
         btnTutorial.setTranslateX(centerX2);
         btnTutorial.setTranslateY(centerY2);
         btnTutorial.setOnAction(e -> T.Tutorial());
@@ -138,7 +139,7 @@ public class App extends GameApplication {
         Button btnCredit = new Button("Credit");
         btnCredit.setFont(Font.font(28));
         double centerX3 = 300;
-        double centerY3 = 590;
+        double centerY3 = 535;
         btnCredit.setTranslateX(centerX3);
         btnCredit.setTranslateY(centerY3);
         btnCredit.setOnAction(e -> C.Credit());
