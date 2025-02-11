@@ -1,100 +1,124 @@
 package com.game;
 
-import static com.almasb.fxgl.dsl.FXGL.getGameScene;
-
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import static com.almasb.fxgl.dsl.FXGL.*;
+
 public class NewGame {
     public void NewGame() {
         getGameScene().clearUINodes();
-        //bg
-        //Image bgImage = new Image(getClass().getResource("/com/game/bg.jpg").toExternalForm());
-        //ImageView bgView = new ImageView(bgImage);
-        
-        //getGameScene().addUINode(bgView);
 
-        
-        // button Back
+        // Background
+        Image imagebg = getAssetLoader().loadImage("bg.jpg");
+        ImageView background = new ImageView(imagebg);
+        background.setFitWidth(1100);
+        background.setFitHeight(790);
+        getGameScene().addUINode(background);
+
+        // Button Back
         Button Backbtn = new Button("Back");
-        Backbtn.setFont(Font.font(28));
+        Backbtn.setFont(Font.font("Arial", 30));
+        Backbtn.setStyle("-fx-background-color: #FF4500; -fx-text-fill: white; -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-padding: 10 30 10 30;");
         double BackX = 80;
         double BackY = 70;
         Backbtn.setTranslateX(BackX);
         Backbtn.setTranslateY(BackY);
         Backbtn.setOnAction(e -> new App().Main());
-        // title SELECT CHARACTER
+
+        // Title SELECT CHARACTER
         Text title4 = new Text("SELECT CHARACTER");
         title4.setFont(Font.font(60));
-        title4.setStyle("\"-fx-background-color: transparent; -fx-font-weight: bold;");
-        double title4CenterX1 = 200;
-        double title4CenterY1 = 120;
-        title4.setTranslateX(title4CenterX1);
-        title4.setTranslateY(title4CenterY1);
+        title4.setStyle("-fx-background-color: transparent; -fx-font-weight: bold;");
+        title4.setTranslateX(200);
+        title4.setTranslateY(120);
         DropShadow shadow = new DropShadow();
         shadow.setOffsetX(2);
         shadow.setOffsetY(2);
         shadow.setColor(Color.DARKORANGE);
         shadow.setRadius(5);
         title4.setEffect(shadow);
-        // Image 001
-        Image image = new Image(getClass().getResource("/com/game/001.png").toExternalForm());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(300);
-        imageView.setFitHeight(200);
-        imageView.setPreserveRatio(true);
-        imageView.setTranslateX(80);
-        imageView.setTranslateY(160);
-        // Image 002
-        Image image1 = new Image(getClass().getResource("/com/game/002.png").toExternalForm());
-        ImageView imageView1 = new ImageView(image1);
-        imageView1.setFitWidth(300);
-        imageView1.setFitHeight(200);
-        imageView1.setPreserveRatio(true);
-        imageView1.setTranslateX(290);
-        imageView1.setTranslateY(160);
-        // Image003
-        Image image2 = new Image(getClass().getResource("/com/game/003.png").toExternalForm());
-        ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitWidth(300);
-        imageView2.setFitHeight(200);
-        imageView2.setPreserveRatio(true);
-        imageView2.setTranslateX(500);
-        imageView2.setTranslateY(160);
-        // Image004
-        Image image3 = new Image(getClass().getResource("/com/game/004.png").toExternalForm());
-        ImageView imageView3 = new ImageView(image3);
-        imageView3.setFitWidth(300);
-        imageView3.setFitHeight(200);
-        imageView3.setPreserveRatio(true);
-        imageView3.setTranslateX(185);
-        imageView3.setTranslateY(420);
-        // Image005
-        Image image4 = new Image(getClass().getResource("/com/game/005.png").toExternalForm());
-        ImageView imageView4 = new ImageView(image4);
-        imageView4.setFitWidth(300);
-        imageView4.setFitHeight(200);
-        imageView4.setPreserveRatio(true);
-        imageView4.setTranslateX(400);
-        imageView4.setTranslateY(420);
-        
-        // ช่องสี่เหลี่ยมเลือกตัว
 
+        // Detail Box
+        Text detailText = new Text("");
+        detailText.setFont(new Font("Arial", 16));
+        VBox detailBox = new VBox(detailText);
+        detailBox.setTranslateX(900);
+        detailBox.setTranslateY(500);
+        detailBox.setPadding(new Insets(10));
+        detailBox.setSpacing(5);
+        detailBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        detailBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10;");
 
-        // แสดง UI
+        // Player Name Input Box
+        Text playerNameLabel = new Text("Player Name:");
+        playerNameLabel.setFont(new Font("Arial", 16));
+        TextField playerNameField = new TextField();
+        playerNameField.setPromptText("Enter your name");
+        VBox playerNameBox = new VBox(playerNameLabel, playerNameField);
+        playerNameBox.setTranslateX(900);
+        playerNameBox.setTranslateY(50);
+        playerNameBox.setPadding(new Insets(10));
+        playerNameBox.setSpacing(5);
+        playerNameBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        playerNameBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10;");
+
+        // Selected Character Path
+        final String[] selectedCharacterPath = {""};
+
+        // Start Button
+        Button startBtn = new Button("Start");
+        startBtn.setFont(Font.font(28));
+        startBtn.setTranslateX(900);
+        startBtn.setTranslateY(200);
+        startBtn.setOnAction(e -> {
+            String playerName = playerNameField.getText();
+            if (!playerName.isEmpty() && !selectedCharacterPath[0].isEmpty()) {
+                new Map().Map(playerName, selectedCharacterPath[0]);
+            } else {
+                detailText.setText("Please enter a name and select a character.");
+            }
+        });
+
+        // Images and Click Handlers
+        String[] imagePaths = {"/com/game/001.png", "/com/game/002.png", "/com/game/003.png", "/com/game/004.png", "/com/game/005.png"};
+        String[] characterNames = {"Archer", "Swords man", "Tank", "Mage", "Gunner"};
+        double[][] positions = {{80, 160}, {290, 160}, {500, 160}, {185, 420}, {400, 420}};
+
+        for (int i = 0; i < imagePaths.length; i++) {
+            Image image = new Image(getClass().getResource(imagePaths[i]).toExternalForm());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(300);
+            imageView.setFitHeight(200);
+            imageView.setPreserveRatio(true);
+            imageView.setTranslateX(positions[i][0]);
+            imageView.setTranslateY(positions[i][1]);
+
+            int index = i;
+            imageView.setOnMouseClicked(event -> {
+                detailText.setText(characterNames[index]);
+                selectedCharacterPath[0] = imagePaths[index];
+            });
+
+            getGameScene().addUINode(imageView);
+        }
+
+        // Add UI Nodes
         getGameScene().addUINode(Backbtn);
         getGameScene().addUINode(title4);
-        getGameScene().addUINode(imageView);
-        getGameScene().addUINode(imageView1);
-        getGameScene().addUINode(imageView2);
-        getGameScene().addUINode(imageView3);
-        getGameScene().addUINode(imageView4);
-  
-
+        getGameScene().addUINode(detailBox);
+        getGameScene().addUINode(playerNameBox);
+        getGameScene().addUINode(startBtn);
     }
 }

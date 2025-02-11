@@ -1,8 +1,9 @@
 package com.game;
 
-import static com.almasb.fxgl.dsl.FXGL.getGameScene;
-
+import static com.almasb.fxgl.dsl.FXGL.*;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -11,15 +12,23 @@ import javafx.scene.text.Text;
 class Tutorial {
 
     public void Tutorial() {
+
         getGameScene().clearUINodes();
-        Button Backbtn = new Button("Back");
-        Backbtn.setFont(Font.font(28));
+        Image imagebg = getAssetLoader().loadImage("bg.jpg");
+        ImageView background = new ImageView(imagebg);
+        background.setFitWidth(1100);
+        background.setFitHeight(790);
+        getGameScene().addUINode(background);
+
+         Button Backbtn = new Button("Back");
+        Backbtn.setFont(Font.font("Arial", 30));
+        Backbtn.setStyle("-fx-background-color: #FF4500; -fx-text-fill: white; -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-padding: 10 30 10 30;");
         double BackX = 80;
         double BackY = 70;
         Backbtn.setTranslateX(BackX);
         Backbtn.setTranslateY(BackY);
         Backbtn.setOnAction(e -> new App().Main());
-
+        
         Rectangle infoBox = new Rectangle(800, 400); 
         infoBox.setFill(Color.LIGHTYELLOW);
         infoBox.setStroke(Color.DARKBLUE);
