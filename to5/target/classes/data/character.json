@@ -1,0 +1,259 @@
+{
+    "Character": [
+        {
+            "Name": "Arya",
+            "Class": "Archer",
+            "Hp": 8,
+            "img_part": "/assets/char1.png",
+            "Skill1": [
+                {
+                    "Name": "Quick Shot",
+                    "mana": 0,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false  
+                        }
+                    ]
+                }
+            ],
+            "Skill2": [
+                {
+                    "Name": "Rain Of Arrows",
+                    "mana": 1,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 1,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill3": [
+                {
+                    "Name": "Poison Shot",
+                    "mana": 3,
+                    "Dmg": 2,
+                    "Sp": [
+                        {
+                            "Dmg": 1,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "Bloody",
+            "Class": "Sword",
+            "Hp": 9,
+            "img_part": "/assets/char2.png",
+            "Skill1": [
+                {
+                    "Name": "Slash",
+                    "mana": 0,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill2": [
+                {
+                    "Name": "Phantom Step",
+                    "mana": 0,
+                    "Dmg": 0,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 1,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill3": [
+                {
+                    "Name": "Crimson Stance",
+                    "mana": 4,
+                    "Dmg": 4,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "Sansa",
+            "Class": "Tank",
+            "Hp": 10,
+            "img_part": "/assets/char3.png",
+            "Skill1": [
+                {
+                    "Name": "Strong Punch",
+                    "mana": 0,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill2": [
+                {
+                    "Name": "Shield Slam",
+                    "mana": 1,
+                    "Dmg": 0,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 2,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill3": [
+                {
+                    "Name": "Titan Slam",
+                    "mana": 2,
+                    "Dmg": 2,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "Mona",
+            "Class": "Mage",
+            "Hp": 7,
+            "img_part": "/assets/char4.png",
+            "Skill1": [
+                {
+                    "Name": "Staff Strike",
+                    "mana": 0,
+                    "Dmg": 0.5,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill2": [
+                {
+                    "Name": "Mana Surge",
+                    "mana": 1,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 1,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill3": [
+                {
+                    "Name": "Astral Phase",
+                    "mana": 3,
+                    "Dmg": 3,
+                    "Sp": [
+                        {
+                            "Dmg": 2,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "Jon",
+            "Class": "Gunner",
+            "Hp": 6,
+            "img_part": "/assets/char5.png",
+            "Skill1": [
+                {
+                    "Name": "Shot",
+                    "mana": 0,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill2": [
+                {
+                    "Name": "Rapid Fire",
+                    "mana": 2,
+                    "Dmg": 3,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 0,
+                            "turn": false
+                        }
+                    ]
+                }
+            ],
+            "Skill3": [
+                {
+                    "Name": "Smoke Bomb",
+                    "mana": 2,
+                    "Dmg": 1,
+                    "Sp": [
+                        {
+                            "Dmg": 0,
+                            "mana": 0,
+                            "Hp": 1,
+                            "turn": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

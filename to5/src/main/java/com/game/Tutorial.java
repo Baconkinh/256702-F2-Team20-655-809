@@ -1,59 +1,48 @@
 package com.game;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-class Tutorial {
+public class Tutorial {
+    private Stage primaryStage;
 
-    public void Tutorial() {
+    public Tutorial(Stage stage) {
+        this.primaryStage = stage;
+    }
 
-        getGameScene().clearUINodes();
-        Image imagebg = getAssetLoader().loadImage("bg.jpg");
-        ImageView background = new ImageView(imagebg);
-        background.setFitWidth(1100);
-        background.setFitHeight(790);
-        getGameScene().addUINode(background);
+    public void showTutorialScene() {
+        Label tutorialTitle = new Label("TUTORIAL");
+        tutorialTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-         Button Backbtn = new Button("Back");
-        Backbtn.setFont(Font.font("Arial", 30));
-        Backbtn.setStyle("-fx-background-color: #FF4500; -fx-text-fill: white; -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-padding: 10 30 10 30;");
-        double BackX = 80;
-        double BackY = 70;
-        Backbtn.setTranslateX(BackX);
-        Backbtn.setTranslateY(BackY);
-        Backbtn.setOnAction(e -> new App().Main());
-        
-        Rectangle infoBox = new Rectangle(800, 400); 
-        infoBox.setFill(Color.LIGHTYELLOW);
-        infoBox.setStroke(Color.DARKBLUE);
-        infoBox.setStrokeWidth(5);
-        infoBox.setArcWidth(30);
-        infoBox.setArcHeight(30);
-        infoBox.setTranslateX(150);
-        infoBox.setTranslateY(150);
+        Label tutorialText = new Label("TUTORIAL: \n1. New Game \n2. Create\n3. GoGo");
+        tutorialText.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-alignment: center;");
 
-        Text tutorialText = new Text("Bank\n" +
-                                     "is Better\n" +
-                                     "Than\n" +
-                                     "Nong\n" +
-                                     "View\n" +
-                                     "View");
-        tutorialText.setFont(Font.font("Arial", 50)); 
-        tutorialText.setFill(Color.DARKBLUE);
-        tutorialText.setTranslateX(500);
-        tutorialText.setTranslateY(200);
-        tutorialText.setWrappingWidth(700);
+        VBox tutorialBox = new VBox(10, tutorialTitle, tutorialText);
+        tutorialBox.setAlignment(Pos.CENTER);
+        tutorialBox.setStyle("-fx-padding: 20px; -fx-border-color: white; -fx-border-width: 3px; -fx-background-color: #333;");
+        tutorialBox.setPrefSize(400, 250);
 
-        
+        StackPane tutorialContainer = new StackPane(tutorialBox);
+        tutorialContainer.setAlignment(Pos.CENTER);
 
-        getGameScene().addUINode(infoBox);
-        getGameScene().addUINode(tutorialText);
-        getGameScene().addUINode(Backbtn);
+        Button btnBack = new Button("BACK");
+        btnBack.setStyle("-fx-font-size: 16px; -fx-background-color: red; -fx-text-fill: white;");
+        btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
+
+        BorderPane root = new BorderPane();
+        root.setCenter(tutorialContainer);
+        root.setTop(btnBack);
+        BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
+        BorderPane.setMargin(btnBack, new Insets(10));
+
+        Scene tutorialScene = new Scene(root, 1100, 790);
+        primaryStage.setScene(tutorialScene);
     }
 }
