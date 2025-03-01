@@ -91,7 +91,7 @@ public class CharacterCreation {
             charImageView.setFitWidth(100);
             charImageView.setFitHeight(100);
 
-            RadioButton charButton = new RadioButton();
+            RadioButton charButton = new RadioButton(); 
             charButton.setGraphic(charImageView);
             charButton.setToggleGroup(characterGroup);
             charButton.setOnAction(e -> {

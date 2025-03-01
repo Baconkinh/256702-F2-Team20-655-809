@@ -81,48 +81,110 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.text.Font;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Credit {
     private Stage primaryStage;
 
-    public Credit(Stage stage) { 
+    public Credit(Stage stage) {
         this.primaryStage = stage;
     }
 
     public void showCreditScene() {
+        // 🔹 โหลดรูปภาพพื้นหลัง
+        Image backgroundImage = new Image("Background/bg.jpg"); // ตรวจสอบ path ให้ถูกต้อง
+        BackgroundImage bgImage = new BackgroundImage(
+            backgroundImage,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(1100, 790, false, false, false, false)
+        );
+
+        // 🎨 ตั้งค่าพื้นหลัง
+        BorderPane root = new BorderPane();
+        root.setBackground(new Background(bgImage));
+
+        // 🏆 หัวข้อ "CREDITS"
         Label creditTitle = new Label("CREDITS");
         creditTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        // เพิ่มข้อมูลที่คอมเมนต์ไว้ในนี้
-        Label name1 = new Label("1. อัจฉรา ดังดี  6730300655\nตกแต่งหน้า UI , ทำรูปภาพประกอบเกม , ออกแบบสกิลตัวละคร");
+        Font font = Font.loadFont(getClass().getResourceAsStream("/Font/Sriracha-Regular.ttf"), 20);
+        Font font1 = Font.loadFont(getClass().getResourceAsStream("/Font/Pridi-Bold.ttf"), 20);
+        // 👥 รายชื่อทีมงาน
+        Label name1 = new Label("1. อัจฉรา ดังดี  6730300655\nตกแต่งหน้า UI , ทำรูปภาพประกอบเกม , \nออกแบบสกิลตัวละคร");
         Label name2 = new Label("2. ปภากร จันทร์ดี  6730300809\nจัดหน้า UI , เพิ่มฟังก์ชันต่างๆ , ออกแบบรูปแบบการเล่น");
 
-        name1.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
-        name2.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+        
 
-        VBox creditBox = new VBox(10, creditTitle, name1, name2);
-        creditBox.setAlignment(Pos.CENTER);
-        creditBox.setStyle("-fx-padding: 20px; -fx-border-color: white; -fx-border-width: 3px; -fx-background-color: #333;");
-        creditBox.setPrefSize(300, 200);
+        name1.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Pridi;");
+        name2.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Pridi;");
 
-        StackPane creditContainer = new StackPane(creditBox);
+        
+
+        name1.setFont(font1);
+        name2.setFont(font1);
+        // name1.setFont(Font.font("Sriracha", 20));
+        // name2.setFont(Font.font("tahoma", 28));
+        
+        VBox creditBox = new VBox(10, name1, name2);
+        creditBox.setAlignment(Pos.CENTER_LEFT);
+        creditBox.setPadding(new Insets(50,0,0,340));
+
+        VBox creditBox1 = new VBox(10, creditTitle);
+        creditBox1.setAlignment(Pos.CENTER_LEFT);
+        creditBox1.setPadding(new Insets(0,0,200,475));
+
+        // 🎨 ใส่กรอบสี่เหลี่ยมสวยงาม
+        StackPane creditContainer = new StackPane();
+        
+        creditContainer.getChildren().addAll(createBackgroundBox(), creditBox ,creditBox1);
+       
         creditContainer.setAlignment(Pos.CENTER);
 
+        // 🔙 ปุ่มกลับไปเมนูหลัก
         Button btnBack = new Button("BACK");
-        btnBack.setStyle("-fx-font-size: 16px; -fx-background-color: red; -fx-text-fill: white;");
-        btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu()); 
+        btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;"
+        );
+        btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
-        BorderPane root = new BorderPane();
         root.setCenter(creditContainer);
         root.setTop(btnBack);
-        BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);  
+        BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
         BorderPane.setMargin(btnBack, new Insets(10));
 
+        // 📺 แสดง Scene
         Scene creditScene = new Scene(root, 1100, 790);
+        creditScene.getStylesheets().add(getClass().getResource("/Font/Sriracha-Regular.ttf").toExternalForm());
         primaryStage.setScene(creditScene);
+
+    }
+
+
+    // 🔹 ฟังก์ชันสร้างกรอบสี่เหลี่ยม
+    private StackPane createBackgroundBox() {
+        Rectangle backgroundBox = new Rectangle(500, 300);
+        backgroundBox.setFill(Color.rgb(0, 0, 0, 0.7)); // พื้นหลังสีดำโปร่งแสง
+        backgroundBox.setStroke(Color.WHITE);
+        backgroundBox.setStrokeWidth(3);
+        backgroundBox.setArcWidth(30); // ขอบมน
+        backgroundBox.setArcHeight(30);
+
+        // ✨ เพิ่มเงาให้กรอบ
+        DropShadow boxShadow = new DropShadow(20, Color.BLACK);
+        backgroundBox.setEffect(boxShadow);
+
+        return new StackPane(backgroundBox);
     }
 }
