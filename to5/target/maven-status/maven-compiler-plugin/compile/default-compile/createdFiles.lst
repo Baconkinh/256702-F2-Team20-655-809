@@ -5,6 +5,7 @@ com\game\Mon1.class
 com\game\Tutorial.class
 com\game\CharacterCreation$Character.class
 com\game\Mon3.class
+com\game\GameScene$1.class
 com\game\Credit.class
 com\game\Mon2.class
 com\game\Character.class

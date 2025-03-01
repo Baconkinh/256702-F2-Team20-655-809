@@ -5,9 +5,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Tutorial {
@@ -18,31 +20,84 @@ public class Tutorial {
     }
 
     public void showTutorialScene() {
-        Label tutorialTitle = new Label("TUTORIAL");
-        tutorialTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
+        // 🔹 โหลดรูปภาพพื้นหลัง
+        Image backgroundImage = new Image("Background/1.jpg");
+        BackgroundImage bgImage = new BackgroundImage(
+            backgroundImage,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(1100, 790, false, false, false, false)
+        );
 
-        Label tutorialText = new Label("TUTORIAL: \n1. New Game \n2. Create\n3. GoGo");
-        tutorialText.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-alignment: center;");
+        // 🎨 ตั้งค่าพื้นหลัง
+        BorderPane root = new BorderPane();
+        root.setBackground(new Background(bgImage));
 
-        VBox tutorialBox = new VBox(10, tutorialTitle, tutorialText);
-        tutorialBox.setAlignment(Pos.CENTER);
-        tutorialBox.setStyle("-fx-padding: 20px; -fx-border-color: white; -fx-border-width: 3px; -fx-background-color: #333;");
-        tutorialBox.setPrefSize(400, 250);
+        // 🏆 หัวข้อ "CREDITS"
+        Label creditTitle = new Label("Tutorial");
+        creditTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        StackPane tutorialContainer = new StackPane(tutorialBox);
-        tutorialContainer.setAlignment(Pos.CENTER);
+        Label name1 = new Label("1. ตั้งชื่อและเลือกตัวละครแต่ละตัวที่ต้องการเล่นแล้วกดเริ่ม");
+        Label name2 = new Label("2. เดินไปหามอนสเตอร์ที่สามารถสู้ได้");
+        Label name3 = new Label("3. กดสกิลที่ต้องการใช้และต้องมีManaที่เพียงพอถึงจะใช้ได้ \nเมื่อจบ 1 เทิร์น ฝ่ายที่จบจะได้ 1 Mana");
+        Label name4 = new Label("4. เมื่อฝ่ายไหน Hp น้อยกว่าหรือเท่ากับ 0 ฝ่ายนั้นจะเป็นผู้แพ้ \nและอีกฝ่ายจะเป็นผู้ชนะ");
+        Label name5 = new Label("5. หากชนะมอนสเตอร์ได้จะได้รับแต้มเพื่อปลดล็อค\nมอนสเตอร์ตัวถัดไป");
 
+        name1.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        name2.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        name3.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        name4.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        name5.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+
+        VBox creditBox = new VBox(10, name1, name2, name3, name4, name5);
+        creditBox.setAlignment(Pos.CENTER_LEFT);
+        creditBox.setPadding(new Insets(45, 0, 0, 340));
+
+        VBox creditBox1 = new VBox(10, creditTitle);
+        creditBox1.setAlignment(Pos.CENTER_LEFT);
+        creditBox1.setPadding(new Insets(0, 0, 300, 475));
+
+        // 🎨 ใส่กรอบสี่เหลี่ยมสวยงาม
+        StackPane creditContainer = new StackPane();
+        creditContainer.getChildren().addAll(createBackgroundBox(), creditBox, creditBox1);
+        creditContainer.setAlignment(Pos.CENTER);
+
+        // 🔙 ปุ่มกลับไปเมนูหลัก
         Button btnBack = new Button("BACK");
-        btnBack.setStyle("-fx-font-size: 16px; -fx-background-color: red; -fx-text-fill: white;");
+        btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;"
+        );
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
-        BorderPane root = new BorderPane();
-        root.setCenter(tutorialContainer);
+        root.setCenter(creditContainer);
         root.setTop(btnBack);
         BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
         BorderPane.setMargin(btnBack, new Insets(10));
 
+        // 📺 แสดง Scene
         Scene tutorialScene = new Scene(root, 1100, 790);
         primaryStage.setScene(tutorialScene);
+    }
+
+    // 🔹 ฟังก์ชันสร้างกรอบสี่เหลี่ยม
+    private StackPane createBackgroundBox() {
+        Rectangle backgroundBox = new Rectangle(500, 450);
+        backgroundBox.setFill(Color.rgb(0, 0, 0, 0.7)); // พื้นหลังสีดำโปร่งแสง
+        backgroundBox.setStroke(Color.WHITE);
+        backgroundBox.setStrokeWidth(3);
+        backgroundBox.setArcWidth(30); // ขอบมน
+        backgroundBox.setArcHeight(30);
+
+        // ✨ เพิ่มเงาให้กรอบ
+        DropShadow boxShadow = new DropShadow(20, Color.BLACK);
+        backgroundBox.setEffect(boxShadow);
+
+        return new StackPane(backgroundBox);
     }
 }

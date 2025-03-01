@@ -98,7 +98,7 @@ public class Credit {
 
     public void showCreditScene() {
         // 🔹 โหลดรูปภาพพื้นหลัง
-        Image backgroundImage = new Image("Background/bg.jpg"); // ตรวจสอบ path ให้ถูกต้อง
+        Image backgroundImage = new Image("Background/1.jpg"); // ตรวจสอบ path ให้ถูกต้อง
         BackgroundImage bgImage = new BackgroundImage(
             backgroundImage,
             BackgroundRepeat.NO_REPEAT,

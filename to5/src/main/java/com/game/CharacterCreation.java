@@ -20,9 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class CharacterCreation {
@@ -58,19 +56,13 @@ public class CharacterCreation {
                 character.img_part = charObj.getString("img_part");
                 characterList.add(character);
             }
-
-            System.out.println("----------------");
-            System.out.println("----------------");
-            System.out.println("Loaded Characters: " + characterList);
-            System.out.println("----------------");
-            System.out.println("----------------");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void showCharacterCreationScene() {
+        // 🏆 Title
         Label title = new Label("Choose your character");
         title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
 
@@ -91,7 +83,7 @@ public class CharacterCreation {
             charImageView.setFitWidth(100);
             charImageView.setFitHeight(100);
 
-            RadioButton charButton = new RadioButton(); 
+            RadioButton charButton = new RadioButton();
             charButton.setGraphic(charImageView);
             charButton.setToggleGroup(characterGroup);
             charButton.setOnAction(e -> {
@@ -112,37 +104,53 @@ public class CharacterCreation {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Please choose a character and name it!", ButtonType.OK);
                 alert.showAndWait();
             } else {
-                    Character selectedCharacter = characterList.stream()
-                    .filter(c -> c.img_part.equals(selectedCharacterImage))
-                    .findFirst()
-                    .orElse(null);
-                if (selectedCharacter != null) {
-                    System.out.println("  ตัวละครที่เลือก:");
-                    System.out.println("   ชื่อที่ตั้ง: " + playerName);
-                    System.out.println("   ชื่อตัวละครเกม: " + selectedCharacter.Name);
-                    System.out.println("   อาชีพ: " + selectedCharacter.Class);
-                    System.out.println("   HP: " + selectedCharacter.Hp);
-                    System.out.println("   รูปภาพ: " + selectedCharacter.img_part);
-                }
-
                 new GameScene(primaryStage, playerName, selectedCharacterClass, selectedCharacterImage).showGameScene();
             }
         });
 
+        // 🔙 ปุ่มกลับไปเมนูหลัก
         Button btnBack = new Button("BACK");
+        btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;"
+        );
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
         VBox layout = new VBox(20, title, nameField, characterBox, selectedJobLabel, btnConfirm);
         layout.setAlignment(Pos.CENTER);
-        layout.setStyle("-fx-background-color: #222;");
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
         layout.setPadding(new Insets(20));
 
+        // 🔹 ใช้ BorderPane แทน StackPane เพื่อให้ปุ่ม BACK เหมือนกับ Tutorial.java
         BorderPane root = new BorderPane();
         root.setCenter(layout);
         root.setTop(btnBack);
-        BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
-        BorderPane.setMargin(btnBack, new Insets(10));
 
+        // 📌 จัดตำแหน่งปุ่ม BACK ที่มุมซ้ายบน
+        BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
+        BorderPane.setMargin(btnBack, new Insets(10)); // ตั้งระยะห่างจากขอบ
+
+        // 🌄 เพิ่ม Background Image แบบเต็มหน้าจอ
+        try {
+            Image backgroundImage = new Image(getClass().getResource("/Background/bg.jpg").toExternalForm());
+            BackgroundSize backgroundSize = new BackgroundSize(1100, 790, false, false, false, false);
+            BackgroundImage background = new BackgroundImage(
+                    backgroundImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    backgroundSize
+            );
+            root.setBackground(new Background(background));
+        } catch (Exception e) {
+            System.out.println("Error loading background image: " + e.getMessage());
+        }
+
+        // 🎬 แสดง Scene
         Scene scene = new Scene(root, 1100, 790);
         primaryStage.setScene(scene);
     }
@@ -152,15 +160,5 @@ public class CharacterCreation {
         public String Class;
         public int Hp;
         public String img_part;
-
-        @Override
-        public String toString() {
-            return "Character{" +
-                   "Name='" + Name + '\'' +
-                   ", Class='" + Class + '\'' +
-                   ", Hp=" + Hp +
-                   ", img_part='" + img_part + '\'' +
-                   '}';
-        }
     }
 }
