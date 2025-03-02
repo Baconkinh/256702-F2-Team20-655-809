@@ -2,65 +2,51 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+ 
   <groupId>com.example</groupId>
   <artifactId>JavaFXApp</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>JavaFXApp</name>
   <url>http://maven.apache.org</url>
-
+ 
   <repositories>
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
-
+ 
   <dependencies>
-    <!-- JUnit (for testing only) -->
+    <!-- JUnit for testing -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>5.9.3</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>5.9.3</version>
       <scope>test</scope>
     </dependency>
-
+ 
+    <!-- JavaFX Dependencies -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>21</version>
     </dependency>
-
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>21</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20220320</version>
-    </dependency>
-
-    <!-- JavaFX Dependencies -->
-
-
-    <!-- FXGL Game Engine (Fixed version) -->
-    <dependency>
-      <groupId>com.github.AlmasB</groupId>
-      <artifactId>FXGL</artifactId>
-      <version>17.2</version> <!-- Latest stable version -->
-    </dependency>
-
+ 
+    <!-- FXGL Game Engine -->
+    
+ 
     <!-- JSON Library -->
     <dependency>
       <groupId>org.json</groupId>
@@ -68,9 +54,10 @@
       <version>20220320</version>
     </dependency>
   </dependencies>
-
+ 
   <build>
     <plugins>
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -80,22 +67,27 @@
           <target>17</target>
         </configuration>
       </plugin>
-
+ 
       <!-- JavaFX Maven Plugin -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
-        <executions>
-          <execution>
-            <id>default-cli</id>
-            <configuration>
-              <mainClass>com.game.MainMenu</mainClass>
-            </configuration>
-          </execution>
-        </executions>
+        <configuration>
+          <mainClass>com.game.MainMenu</mainClass> <!-- Ensure this matches your main class -->
+        </configuration>
       </plugin>
-
+ 
+      <!-- Exec Maven Plugin (ใช้สำหรับ VS Code) -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>com.game.MainMenu</mainClass>
+        </configuration>
+      </plugin>
+ 
     </plugins>
   </build>
 </project>
