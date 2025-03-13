@@ -1,0 +1,44 @@
+[
+    {
+        "img": "/assets/char2.png",
+        "name": "112",
+        "time": "2025/03/10 23:53:32",
+        "job": "Sword",
+        "point": "Point: 0"
+    },
+    {
+        "img": "/assets/char1.png",
+        "name": "558",
+        "time": "2025/03/10 23:53:53",
+        "job": "Archer",
+        "point": "Point: 0"
+    },
+    {
+        "img": "/assets/char3.png",
+        "name": "0001",
+        "time": "2025/03/10 23:55:01",
+        "job": "Tank",
+        "point": "Point: 0"
+    },
+    {
+        "img": "/assets/char2.png",
+        "name": "View",
+        "time": "2025/03/13 17:15:41",
+        "job": "Sword",
+        "point": "Point: 0"
+    },
+    {
+        "img": "/assets/char5.png",
+        "name": "nong view",
+        "time": "2025/03/13 17:19:50",
+        "job": "Gunner",
+        "point": "Point: 0"
+    },
+    {
+        "img": "/assets/char3.png",
+        "name": "as",
+        "time": "2025/03/13 17:24:27",
+        "job": "Tank",
+        "point": "Point: 0"
+    }
+]
