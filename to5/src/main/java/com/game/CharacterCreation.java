@@ -104,7 +104,7 @@ public class CharacterCreation {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Please choose a character and name it!", ButtonType.OK);
                 alert.showAndWait();
             } else {
-                new GameScene(primaryStage, playerName, selectedCharacterClass, selectedCharacterImage).showGameScene();
+                new GameScene(primaryStage, playerName, selectedCharacterClass, selectedCharacterImage, 0).showGameScene();
             }
         });
 

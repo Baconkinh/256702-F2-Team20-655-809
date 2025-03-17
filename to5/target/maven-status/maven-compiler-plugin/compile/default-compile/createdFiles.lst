@@ -1,3 +1,4 @@
+com\game\LoadGame.class
 com\game\MainMenu.class
 com\game\Skill.class
 com\game\CharacterCreation.class

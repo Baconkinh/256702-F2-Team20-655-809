@@ -1,44 +1,38 @@
 [
     {
-        "img": "/assets/char2.png",
-        "name": "112",
-        "time": "2025/03/10 23:53:32",
-        "job": "Sword",
-        "point": "Point: 0"
+        "img": "/assets/char1.png",
+        "name": "A",
+        "time": "2025/03/16 19:58:51",
+        "job": "Archer",
+        "point": 0
     },
     {
-        "img": "/assets/char1.png",
-        "name": "558",
-        "time": "2025/03/10 23:53:53",
-        "job": "Archer",
-        "point": "Point: 0"
+        "img": "/assets/char2.png",
+        "name": "B",
+        "time": "2025/03/16 19:59:07",
+        "job": "Sword",
+        "point": 1000
     },
     {
         "img": "/assets/char3.png",
-        "name": "0001",
-        "time": "2025/03/10 23:55:01",
+        "name": "C",
+        "time": "2025/03/16 19:59:15",
         "job": "Tank",
-        "point": "Point: 0"
+        "point": 9999999
     },
     {
-        "img": "/assets/char2.png",
-        "name": "View",
-        "time": "2025/03/13 17:15:41",
-        "job": "Sword",
-        "point": "Point: 0"
+        "img": "/assets/char4.png",
+        "name": "D",
+        "time": "2025/03/16 19:59:21",
+        "job": "Mage",
+        "point": 3000
     },
     {
         "img": "/assets/char5.png",
-        "name": "nong view",
-        "time": "2025/03/13 17:19:50",
+        "name": "E",
+        "time": "2025/03/16 19:59:29",
         "job": "Gunner",
-        "point": "Point: 0"
-    },
-    {
-        "img": "/assets/char3.png",
-        "name": "as",
-        "time": "2025/03/13 17:24:27",
-        "job": "Tank",
-        "point": "Point: 0"
+        "point": 0
     }
+    
 ]

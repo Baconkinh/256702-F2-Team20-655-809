@@ -41,9 +41,10 @@ public class MainMenu extends Application {
         Button btnCredit = createStyledButton("Credit");
 
         // btnNewGame.setOnAction(e -> System.out.println("Starting New Game..."));
-        btnLoadGame.setOnAction(e -> System.out.println("Loading Game..."));
+        // btnLoadGame.setOnAction(e -> System.out.println("Loading Game..."));
         // btnTutorial.setOnAction(e -> System.out.println("Opening Tutorial..."));
         btnNewGame.setOnAction(e -> new CharacterCreation(primaryStage).showCharacterCreationScene());
+        btnLoadGame.setOnAction(e -> new LoadGame(primaryStage).showLoadGameScene());
         btnTutorial.setOnAction(e -> new Tutorial(primaryStage).showTutorialScene());
         btnCredit.setOnAction(e -> new Credit(primaryStage).showCreditScene()); 
 

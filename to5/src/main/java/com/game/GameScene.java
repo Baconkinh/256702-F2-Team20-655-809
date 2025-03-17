@@ -40,7 +40,7 @@ public class GameScene {
     private Label nameLabel;
     // ---------- Add ----------
     private Label pointLabel;
-    private int points = 0;
+    private int points;
     // ---------- Add ----------
     private double characterX = 0, characterY = 0; // แก้ไขตรงนี้
     
@@ -49,8 +49,9 @@ public class GameScene {
     private final double MIN_Y = -350, MAX_Y = 350;
     
 
-    public GameScene(Stage stage, String characterName, String job, String characterImagePath) {
+    public GameScene(Stage stage, String characterName, String job, String characterImagePath, int initialPoints) {
         this.primaryStage = stage;
+        this.points = initialPoints;
 
         // โหลดภาพพื้นหลัง
         Image backgroundImage = new Image("/Background/5.jpg");
@@ -109,7 +110,7 @@ public class GameScene {
             newObject.put("name", characterName);
             newObject.put("job", job);
             newObject.put("img", characterImagePath);
-            newObject.put("point", pointLabel.getText());
+            newObject.put("point", points);
             newObject.put("time", dtf.format(now));
 
             String filePath = "src/main/resources/data/savegame.json";
