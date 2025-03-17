@@ -9,7 +9,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
+// ++++++++
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+// ++++++++
 
 import java.io.File;
 import java.io.FileReader;
@@ -42,6 +46,15 @@ public class GameScene {
     private Label pointLabel;
     private int points;
     // ---------- Add ----------
+    // +++++++++++++++
+     // Array สำหรับเก็บ Kiki sprites จำนวน 5 ตัว
+    private ImageView[] kikiSprites;
+    
+    // จุดไป Map2
+    private Circle map2Portal;
+    private Label notificationLabel; // แสดงข้อความชั่วคราว
+    // +++++++++++++++
+
     private double characterX = 0, characterY = 0; // แก้ไขตรงนี้
     
     private final double MOVE_STEP = 30;
@@ -152,30 +165,73 @@ public class GameScene {
         BorderPane.setAlignment(pointLabel, Pos.TOP_CENTER);
         // ---------- Add ----------
 
-        StackPane root = new StackPane(characterSprite, nameLabel);
-        root.setAlignment(Pos.CENTER);
+        // StackPane root = new StackPane(characterSprite, nameLabel);
+        // root.setAlignment(Pos.CENTER);
+        
+        // สุ่มสร้าง Kiki 5 ตัว โดยใช้รูปจาก /assets/Kiki.png
+        kikiSprites = new ImageView[5];
+        Image kikiImage = new Image(getClass().getResourceAsStream("/assets/Kiki.png"));
+        for (int i = 0; i < 5; i++) {
+            kikiSprites[i] = new ImageView(kikiImage);
+            kikiSprites[i].setFitWidth(50);
+            kikiSprites[i].setFitHeight(50);
+            // สุ่มตำแหน่งในขอบเขตที่กำหนด
+            double randomX = MIN_X + Math.random() * (MAX_X - MIN_X);
+            double randomY = MIN_Y + Math.random() * (MAX_Y - MIN_Y);
+            kikiSprites[i].setTranslateX(randomX);
+            kikiSprites[i].setTranslateY(randomY);
+        }
+
+        // สร้าง Circle สำหรับไป Map2
+        map2Portal = new Circle(20, Color.ORANGE);
+        // วางให้อยู่ทางซ้ายกึ่งกลางจอ (translateX ใกล้ MIN_X, translateY = 0)
+        map2Portal.setTranslateX(-500 + 50); // เลื่อนจากขอบซ้ายเข้ามา 50
+        map2Portal.setTranslateY(0);
+
+        // สร้าง Label แสดงข้อความ "Go to Map 2" ไว้ใกล้ ๆ circle
+        Label map2Label = new Label("Go to Map 2");
+        map2Label.setTextFill(Color.ORANGE);
+        map2Label.setTranslateX(map2Portal.getTranslateX());
+        map2Label.setTranslateY(map2Portal.getTranslateY() - 40);
+
+        // สร้าง StackPane สำหรับแสดงตัวละครหลัก, Kiki ทั้งหมด, และ portal
+        StackPane centerPane = new StackPane();
+        // เพิ่ม Kiki
+        for (ImageView kiki : kikiSprites) {
+            centerPane.getChildren().add(kiki);
+        }
+        // เพิ่ม Circle portal และ Label
+        centerPane.getChildren().addAll(map2Portal, map2Label);
+
+        centerPane.getChildren().add(characterSprite);
+        centerPane.getChildren().add(nameLabel);
+        centerPane.setAlignment(Pos.CENTER);
+        centerPane.setStyle("-fx-background-color: black;");
+
+        // notificationLabel สำหรับแสดงข้อความชั่วคราว
+        notificationLabel = new Label();
+        notificationLabel.setStyle("-fx-text-fill: yellow; -fx-font-size: 16px; -fx-background-color: rgba(0,0,0,0.6); -fx-padding: 5px;");
+        notificationLabel.setVisible(false);
+
+        // ใส่ notificationLabel ไว้บนสุดของ StackPane
+        centerPane.getChildren().add(notificationLabel);
+        StackPane.setAlignment(notificationLabel, Pos.TOP_CENTER);
 
         BorderPane layout = new BorderPane();
-        layout.setBackground(new Background(bgImage)); // ตั้งค่าพื้นหลัง
-        layout.setCenter(root);
         layout.setTop(topPane);
-        // layout.setTop(btnBack);
-        // BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
-        // BorderPane.setMargin(btnBack, new Insets(10));
+        layout.setCenter(centerPane);
 
-// ---------
         Scene scene = new Scene(layout, 1100, 790);
 
+        // ควบคุมการเคลื่อนที่ของตัวละครหลัก พร้อมตรวจจับการชนกับ Kiki และ Map2 Portal
         scene.setOnKeyPressed(event -> {
             double newX = characterX;
             double newY = characterY;
 
-            switch (event.getCode()) {
-                case W -> newY -= MOVE_STEP;
-                case S -> newY += MOVE_STEP;
-                case A -> newX -= MOVE_STEP;
-                case D -> newX += MOVE_STEP;
-            }
+            if (event.getCode() == KeyCode.W) newY -= MOVE_STEP;
+            if (event.getCode() == KeyCode.S) newY += MOVE_STEP;
+            if (event.getCode() == KeyCode.A) newX -= MOVE_STEP;
+            if (event.getCode() == KeyCode.D) newX += MOVE_STEP;
 
             if (newX >= MIN_X && newX <= MAX_X) characterX = newX;
             if (newY >= MIN_Y && newY <= MAX_Y) characterY = newY;
@@ -184,6 +240,37 @@ public class GameScene {
             characterSprite.setTranslateY(characterY);
             nameLabel.setTranslateX(characterX);
             nameLabel.setTranslateY(characterY - 60);
+
+            // ตรวจจับ collision ระหว่างตัวหลักกับ Kiki แต่ละตัว
+            for (ImageView kiki : kikiSprites) {
+                double dx = Math.abs(characterX - kiki.getTranslateX());
+                double dy = Math.abs(characterY - kiki.getTranslateY());
+                // ถ้า collision เกิดขึ้น
+                if (dx < 50 && dy < 50) {
+                    System.out.println("Kikiiiiiiiii");
+                    // สุ่มตำแหน่งใหม่ให้กับ Kiki ตัวที่โดน
+                    double rx = MIN_X + Math.random() * (MAX_X - MIN_X);
+                    double ry = MIN_Y + Math.random() * (MAX_Y - MIN_Y);
+                    kiki.setTranslateX(rx);
+                    kiki.setTranslateY(ry);
+                    // เปลี่ยนไปฉาก turn based โดยส่งชื่อของตัวละครหลัก
+                    new TurnBasedScene(primaryStage, job, characterName, points).showTurnBasedScene();
+                }
+            }
+
+            // ตรวจจับ collision ระหว่างตัวหลักกับ circle map2Portal
+            double dxPortal = Math.abs(characterX - map2Portal.getTranslateX());
+            double dyPortal = Math.abs(characterY - map2Portal.getTranslateY());
+            if (dxPortal < 50 && dyPortal < 50) {
+                // เช็คว่า point >= 10000 หรือไม่
+                if (points >= 10000) {
+                    // ไปด่าน 2
+                    new GameScene2(primaryStage, characterName, job, characterImagePath, points).showGameScene2();
+                } else {
+                    // แจ้งเตือนบนจอ
+                    showMessage("You need at least 10000 points to enter Map 2.");
+                }
+            }
         });
 
         primaryStage.setScene(scene);
@@ -192,4 +279,56 @@ public class GameScene {
     public void showGameScene() {
         primaryStage.show();
     }
+
+    // เมธอดสำหรับแสดงข้อความสั้น ๆ 1 วินาที
+    private void showMessage(String text) {
+        notificationLabel.setText(text);
+        notificationLabel.setVisible(true);
+
+        javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> {
+            notificationLabel.setVisible(false);
+            notificationLabel.setText("");
+        });
+        pause.play();
+    }
 }
+
+//         BorderPane layout = new BorderPane();
+//         layout.setBackground(new Background(bgImage)); // ตั้งค่าพื้นหลัง
+//         layout.setCenter(root);
+//         layout.setTop(topPane);
+//         // layout.setTop(btnBack);
+//         // BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
+//         // BorderPane.setMargin(btnBack, new Insets(10));
+
+// // ---------
+//         Scene scene = new Scene(layout, 1100, 790);
+
+//         scene.setOnKeyPressed(event -> {
+//             double newX = characterX;
+//             double newY = characterY;
+
+//             switch (event.getCode()) {
+//                 case W -> newY -= MOVE_STEP;
+//                 case S -> newY += MOVE_STEP;
+//                 case A -> newX -= MOVE_STEP;
+//                 case D -> newX += MOVE_STEP;
+//             }
+
+//             if (newX >= MIN_X && newX <= MAX_X) characterX = newX;
+//             if (newY >= MIN_Y && newY <= MAX_Y) characterY = newY;
+
+//             characterSprite.setTranslateX(characterX);
+//             characterSprite.setTranslateY(characterY);
+//             nameLabel.setTranslateX(characterX);
+//             nameLabel.setTranslateY(characterY - 60);
+//         });
+
+//         primaryStage.setScene(scene);
+//     }
+
+//     public void showGameScene() {
+//         primaryStage.show();
+//     }
+// }

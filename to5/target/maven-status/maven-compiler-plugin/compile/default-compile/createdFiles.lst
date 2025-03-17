@@ -1,10 +1,11 @@
+com\game\TurnBasedScene.class
 com\game\LoadGame.class
 com\game\MainMenu.class
+com\game\GameScene2.class
 com\game\Skill.class
 com\game\CharacterCreation.class
 com\game\Tutorial.class
 com\game\CharacterCreation$Character.class
-com\game\GameScene$1.class
 com\game\Credit.class
 com\game\Character.class
 com\game\GameScene.class
