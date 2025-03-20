@@ -3,10 +3,11 @@ package com.game;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random; 
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+ 
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -173,6 +174,7 @@ public class TurnBasedScene {
             currentPoints += 100;
             showMessage("You Win! +100 Points");
         } else {
+            currentPoints = 0;
             showMessage("You Lose!");
         }
         
@@ -263,7 +265,7 @@ public class TurnBasedScene {
     
     private void processEndTurn() {
         turnLabel.setText("Turn: Enemy's Turn");
-        
+        Random rand = new Random();
         // หน่วงเวลา 1 วินาที ก่อนเริ่ม animation โจมตี
         PauseTransition pause = new PauseTransition(Duration.seconds(1.0));
         pause.setOnFinished(e -> {
@@ -273,7 +275,7 @@ public class TurnBasedScene {
             attackTransition.setCycleCount(2);
             attackTransition.setOnFinished(event -> {
                 if (playerCurrentHp > 0) {
-                    playerCurrentHp -= 1;
+                     playerCurrentHp -= rand.nextInt(3) + 1;
                 }
                 if (playerCurrentMana < playerMaxMana) {
                     playerCurrentMana += 1;
@@ -289,23 +291,39 @@ public class TurnBasedScene {
         pause.play();
     }
     
+    // ฟังก์ชันช่วยสำหรับเพิ่ม hover effect ให้กับปุ่ม
+    private void addHoverEffect(Button button, String normalStyle, String hoverStyle) {
+        button.setStyle(normalStyle);
+        button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
+        button.setOnMouseExited(e -> button.setStyle(normalStyle));
+    }
+    
     public void showTurnBasedScene() {
         BorderPane root = new BorderPane();
-        
+        root.setStyle("-fx-background-image: url('/Background/turn.png');" +
+                      "-fx-background-size: 1100px 790px;");
         // ด้านบน: ปุ่ม Back, Title, Turn Indicator
         HBox topPane = new HBox(10);
         topPane.setPadding(new Insets(10));
         topPane.setAlignment(Pos.CENTER_LEFT);
         
+        // ปรับสไตล์ปุ่ม BACK ให้เหมือนกับใน Tutorial
         Button btnBack = new Button("BACK");
-        
+        btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;"
+        );
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
         
         Label title = new Label("Turn Based Battle");
-        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
         
         turnLabel = new Label("Turn: Your Turn");
-        turnLabel.setStyle("-fx-font-size: 18px;");
+        turnLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
         
         topPane.getChildren().addAll(btnBack, title, turnLabel);
         root.setTop(topPane);
@@ -325,8 +343,12 @@ public class TurnBasedScene {
         }
         
         Label playerNameLabel = new Label(Namecha + " (" + playerData.optString("Class", "Unknown") + ")");
+        
+        // สร้าง Label HP และ Mana พร้อมปรับสไตล์เป็นสีขาวและตัวหนา
         hpLabel = new Label("HP: " + createBar(playerCurrentHp, playerMaxHp) + " " + playerCurrentHp + "/" + playerMaxHp);
+        hpLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
         manaLabel = new Label("Mana: " + createBar(playerCurrentMana, playerMaxMana) + " " + playerCurrentMana + "/" + playerMaxMana);
+        manaLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
         
         playerPane.getChildren().addAll(playerImageView, playerNameLabel, hpLabel, manaLabel);
         
@@ -346,6 +368,7 @@ public class TurnBasedScene {
         
         Label enemyNameLabel = new Label("Kiki");
         enemyHpLabel = new Label("HP: " + createBar(enemyCurrentHp, enemyMaxHp) + " " + enemyCurrentHp + "/" + enemyMaxHp);
+        enemyHpLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
         enemyPane.getChildren().addAll(enemyImageView, enemyNameLabel, enemyHpLabel);
         
         // Center Panel: Skill Buttons + Skip Turn
@@ -360,6 +383,25 @@ public class TurnBasedScene {
         Button skillBtn2 = new Button();
         Button skillBtn3 = new Button();
         
+        // กำหนด style สำหรับปุ่มสกิล (ขนาดปกติ)
+        String normalSkillStyle = "-fx-background-color: linear-gradient(#2d2d2d, #1c1c1c);" +
+                                  "-fx-border-color: #8B4513;" +
+                                  "-fx-border-width: 2px;" +
+                                  "-fx-text-fill: white;" +
+                                  "-fx-font-size: 16px;" +
+                                  "-fx-padding: 10px 20px;" +
+                                  "-fx-background-radius: 10px;" +
+                                  "-fx-border-radius: 10px;";
+        String hoverSkillStyle = "-fx-background-color: linear-gradient(#FFA500, #FF8C00);" +
+                                 "-fx-border-color: #8B4513;" +
+                                 "-fx-border-width: 2px;" +
+                                 "-fx-text-fill: white;" +
+                                 "-fx-font-size: 16px;" +
+                                 "-fx-padding: 10px 20px;" +
+                                 "-fx-background-radius: 10px;" +
+                                 "-fx-border-radius: 10px;";
+        
+        // สำหรับ Skill1
         if (skill1 != null && skill1.length() > 0) {
             JSONObject s1 = skill1.getJSONObject(0);
             skillBtn1.setText("Skill1 : " + s1.optString("Name", "Skill1"));
@@ -371,7 +413,9 @@ public class TurnBasedScene {
                 processEndTurn();
             });
         }
+        addHoverEffect(skillBtn1, normalSkillStyle, hoverSkillStyle);
         
+        // สำหรับ Skill2
         if (skill2 != null && skill2.length() > 0) {
             JSONObject s2 = skill2.getJSONObject(0);
             skillBtn2.setText("Skill2 : " + s2.optString("Name", "Skill2"));
@@ -383,7 +427,9 @@ public class TurnBasedScene {
                 processEndTurn();
             });
         }
+        addHoverEffect(skillBtn2, normalSkillStyle, hoverSkillStyle);
         
+        // สำหรับ Skill3
         if (skill3 != null && skill3.length() > 0) {
             JSONObject s3 = skill3.getJSONObject(0);
             skillBtn3.setText("Skill3 : " + s3.optString("Name", "Skill3"));
@@ -395,11 +441,29 @@ public class TurnBasedScene {
                 processEndTurn();
             });
         }
+        addHoverEffect(skillBtn3, normalSkillStyle, hoverSkillStyle);
         
         skillPane.getChildren().addAll(skillBtn1, skillBtn2, skillBtn3);
         
-        // Skip Turn
+        // ปุ่ม Skip Turn ให้มี style ที่คล้ายกัน แต่ขนาดเล็กลง
         Button btnSkipTurn = new Button("Skip Turn");
+        String normalSkipStyle = "-fx-background-color: linear-gradient(#2d2d2d, #1c1c1c);" +
+                                 "-fx-border-color: #8B4513;" +
+                                 "-fx-border-width: 2px;" +
+                                 "-fx-text-fill: white;" +
+                                 "-fx-font-size: 14px;" +
+                                 "-fx-padding: 5px 10px;" +
+                                 "-fx-background-radius: 10px;" +
+                                 "-fx-border-radius: 10px;";
+        String hoverSkipStyle = "-fx-background-color: linear-gradient(#FFA500, #FF8C00);" +
+                                "-fx-border-color: #8B4513;" +
+                                "-fx-border-width: 2px;" +
+                                "-fx-text-fill: white;" +
+                                "-fx-font-size: 14px;" +
+                                "-fx-padding: 5px 10px;" +
+                                "-fx-background-radius: 10px;" +
+                                "-fx-border-radius: 10px;";
+        addHoverEffect(btnSkipTurn, normalSkipStyle, hoverSkipStyle);
         btnSkipTurn.setOnAction(e -> processEndTurn());
         
         centerBottomPane.getChildren().addAll(skillPane, btnSkipTurn);
@@ -421,7 +485,7 @@ public class TurnBasedScene {
         notificationLabel.setStyle("-fx-text-fill: yellow; -fx-font-size: 16px; -fx-background-color: rgba(0,0,0,0.6); -fx-padding: 5px;");
         notificationLabel.setVisible(false);
         
-        // ใส่ notificationLabel ไว้ด้านล่าง เวลาที่ skill SP ทำงาน จะบวก ดาเมจและแสดงให้ และก็จะ เตือนถ้า mana ไม่พอ
+        // ใส่ notificationLabel ไว้ด้านล่าง
         BorderPane.setAlignment(notificationLabel, Pos.CENTER);
         root.setBottom(notificationLabel);
 

@@ -26,11 +26,21 @@ public class LoadGame {
     }
 
     public void showLoadGameScene() {
+        // 🔙 ปุ่มกลับไปเมนูหลัก (ปรับสไตล์ให้เหมือนใน Tutorial)
         Button btnBack = new Button("BACK");
+        btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;"
+        );
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
         BorderPane root = new BorderPane();
         BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
+        BorderPane.setMargin(btnBack, new Insets(10));  // กำหนด margin เหมือนใน Tutorial
         root.setTop(btnBack);
 
         ScrollPane scrollPane = new ScrollPane();
@@ -72,7 +82,7 @@ public class LoadGame {
                             System.out.println("\"job\": \"" + job + "\",");
                             System.out.println("\"point\": " + point);
                             System.out.println("----------------------------------");
-             
+            
                             new GameScene(primaryStage, name, job, imgPath, point).showGameScene();
                             System.out.println("xxxxxxxxx");
                         });

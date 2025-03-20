@@ -82,11 +82,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.text.Font;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Credit {
@@ -116,19 +123,20 @@ public class Credit {
         creditTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
         Font font = Font.loadFont(getClass().getResourceAsStream("/Font/Sriracha-Regular.ttf"), 20);
         Font font1 = Font.loadFont(getClass().getResourceAsStream("/Font/Pridi-Bold.ttf"), 20);
+        Font font2 = Font.loadFont(getClass().getResourceAsStream("/Font/Kanit-Bold.ttf"), 20);
         // 👥 รายชื่อทีมงาน
         Label name1 = new Label("1. อัจฉรา ดังดี  6730300655\nตกแต่งหน้า UI , ทำรูปภาพประกอบเกม , \nออกแบบสกิลตัวละคร");
         Label name2 = new Label("2. ปภากร จันทร์ดี  6730300809\nจัดหน้า UI , เพิ่มฟังก์ชันต่างๆ , ออกแบบรูปแบบการเล่น");
 
         
 
-        name1.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Pridi;");
-        name2.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Pridi;");
+        name1.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Kanit;");
+        name2.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-family: Kanit;");
 
         
 
-        name1.setFont(font1);
-        name2.setFont(font1);
+        name1.setFont(font2);
+        name2.setFont(font2);
         // name1.setFont(Font.font("Sriracha", 20));
         // name2.setFont(Font.font("tahoma", 28));
         
