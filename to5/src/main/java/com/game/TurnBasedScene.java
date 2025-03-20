@@ -275,7 +275,7 @@ public class TurnBasedScene {
             attackTransition.setCycleCount(2);
             attackTransition.setOnFinished(event -> {
                 if (playerCurrentHp > 0) {
-                     playerCurrentHp -= rand.nextInt(3) + 1;
+                     playerCurrentHp -= rand.nextInt(2) + 1;
                 }
                 if (playerCurrentMana < playerMaxMana) {
                     playerCurrentMana += 1;

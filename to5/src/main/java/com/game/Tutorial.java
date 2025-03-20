@@ -7,7 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -34,7 +41,7 @@ public class Tutorial {
         BorderPane root = new BorderPane();
         root.setBackground(new Background(bgImage));
 
-        // 🏆 หัวข้อ "CREDITS"
+        // 🏆 หัวข้อ "Tutorial"
         Label creditTitle = new Label("Tutorial");
         creditTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
 
@@ -63,16 +70,27 @@ public class Tutorial {
         creditContainer.getChildren().addAll(createBackgroundBox(), creditBox, creditBox1);
         creditContainer.setAlignment(Pos.CENTER);
 
-        // 🔙 ปุ่มกลับไปเมนูหลัก
+        // 🔙 ปุ่มกลับไปเมนูหลัก พร้อมปรับปรุงสไตล์ให้มีกรอบสีดำและเปลี่ยนสีเมื่อ hover
         Button btnBack = new Button("BACK");
-        btnBack.setStyle(
+        String defaultStyle = 
             "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-background-color: #FF6347; " +  // สีพื้นหลังปกติ
             "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +       // กรอบสีดำ
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
+            "-fx-padding: 10 20;";
+        String hoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +  // สีพื้นหลังเมื่อ hover
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnBack.setStyle(defaultStyle);
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(hoverStyle));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(defaultStyle));
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
         root.setCenter(creditContainer);

@@ -26,25 +26,41 @@ public class LoadGame {
     }
 
     public void showLoadGameScene() {
-        // 🔙 ปุ่มกลับไปเมนูหลัก (ปรับสไตล์ให้เหมือนใน Tutorial)
+        // ปุ่ม BACK พร้อมตกแต่งแบบสวยๆ
         Button btnBack = new Button("BACK");
-        btnBack.setStyle(
+        String defaultStyle = 
             "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-background-color: #FF6347; " +
             "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
+            "-fx-padding: 10 20;";
+        String hoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        
+        btnBack.setStyle(defaultStyle);
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(hoverStyle));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(defaultStyle));
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
+        // ใช้ BorderPane เป็น root แล้วตกแต่งพื้นหลังด้วย background image
         BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-image: url('/Background/1.jpg');" +
+                      "-fx-background-size: 1100px  790px;");
         BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
-        BorderPane.setMargin(btnBack, new Insets(10));  // กำหนด margin เหมือนใน Tutorial
+        BorderPane.setMargin(btnBack, new Insets(10));
         root.setTop(btnBack);
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
 
         VBox vboxList = new VBox(10);
         vboxList.setPadding(new Insets(20));
@@ -75,6 +91,7 @@ public class LoadGame {
 
                         HBox itemBox = createSaveItem(imgPath, name, job, point, time);
 
+                        // เมื่อคลิกที่รายการ จะพิมพ์ข้อมูลออกมาและเข้าสู่เกม
                         itemBox.setOnMouseClicked(e -> {
                             System.out.println("\"img\": \"" + imgPath + "\",");
                             System.out.println("\"name\": \"" + name + "\",");
@@ -82,9 +99,8 @@ public class LoadGame {
                             System.out.println("\"job\": \"" + job + "\",");
                             System.out.println("\"point\": " + point);
                             System.out.println("----------------------------------");
-            
+
                             new GameScene(primaryStage, name, job, imgPath, point).showGameScene();
-                            System.out.println("xxxxxxxxx");
                         });
 
                         vboxList.getChildren().add(itemBox);
@@ -108,7 +124,10 @@ public class LoadGame {
         HBox hBox = new HBox(15);
         hBox.setPadding(new Insets(10));
         hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0;");
+        // ตกแต่งรายการด้วยพื้นหลังโปร่งแสงและเส้นขอบที่เน้นความเรียบร้อย
+        hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0; " +
+                      "-fx-background-color: rgba(255,255,255,0.6); " +
+                      "-fx-background-radius: 10px;");
 
         ImageView imageView;
         try {
@@ -126,15 +145,34 @@ public class LoadGame {
         javafx.scene.control.Label pointLabel = new javafx.scene.control.Label("Point: " + point);
         javafx.scene.control.Label timeLabel = new javafx.scene.control.Label("Time: " + time);
 
+        // กำหนดรูปแบบให้ label ต่าง ๆ
+        String labelStyle = "-fx-font-size: 16px; -fx-text-fill: #333;";
+        nameLabel.setStyle(labelStyle);
+        jobLabel.setStyle(labelStyle);
+        pointLabel.setStyle(labelStyle);
+        timeLabel.setStyle(labelStyle);
+
         hBox.getChildren().addAll(imageView, nameLabel, jobLabel, pointLabel, timeLabel);
+
+        // เอฟเฟคเมื่อกดและปล่อยเมาส์ในแต่ละรายการ
         hBox.setOnMousePressed(e -> {
-            hBox.setStyle("-fx-background-color: lightblue; -fx-border-color: blue; -fx-border-width: 1;");
+            hBox.setStyle("-fx-background-color: rgba(173,216,230,0.8); -fx-border-color: blue; -fx-border-width: 1; -fx-background-radius: 10px;");
         });
         hBox.setOnMouseReleased(e -> {
-            hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0;");
+            hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0; " +
+                          "-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 10px;");
         });
         hBox.setOnMouseExited(e -> {
-            hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0;");
+            hBox.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0; " +
+                          "-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 10px;");
+        });
+        // เมื่อเลื่อนเมาส์เข้ามาในแต่ละ savegame (หรือเมื่อลากเมาส์ผ่าน) เปลี่ยนสีพื้นหลัง
+        hBox.setOnMouseEntered(e -> {
+            hBox.setStyle("-fx-background-color: rgba(240,230,140,0.8); -fx-border-color: gray; -fx-border-width: 0 0 1 0; -fx-background-radius: 10px;");
+        });
+        // เมื่อลากเมาส์ (drag) ผ่านรายการ ให้ใช้สีเดียวกับเมื่อกด
+        hBox.setOnMouseDragged(e -> {
+            hBox.setStyle("-fx-background-color: rgba(173,216,230,0.8); -fx-border-color: blue; -fx-border-width: 1; -fx-background-radius: 10px;");
         });
 
         return hBox;

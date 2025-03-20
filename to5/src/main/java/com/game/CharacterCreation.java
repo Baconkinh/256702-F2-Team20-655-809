@@ -20,7 +20,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CharacterCreation {
@@ -108,16 +115,27 @@ public class CharacterCreation {
             }
         });
 
-        // 🔙 ปุ่มกลับไปเมนูหลัก
+        // 🔙 ปุ่มกลับไปเมนูหลัก พร้อมสไตล์เหมือนใน Credit.java
         Button btnBack = new Button("BACK");
-        btnBack.setStyle(
+        String defaultStyle = 
             "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF6347; " +  // สีปุ่มโทนส้มแดง
+            "-fx-background-color: #FF6347; " +
             "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
+            "-fx-padding: 10 20;";
+        String hoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnBack.setStyle(defaultStyle);
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(hoverStyle));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(defaultStyle));
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
         VBox layout = new VBox(20, title, nameField, characterBox, selectedJobLabel, btnConfirm);
@@ -125,14 +143,12 @@ public class CharacterCreation {
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
         layout.setPadding(new Insets(20));
 
-        // 🔹 ใช้ BorderPane แทน StackPane เพื่อให้ปุ่ม BACK เหมือนกับ Tutorial.java
+        // ใช้ BorderPane เพื่อจัดวางปุ่ม BACK ที่มุมบนซ้าย
         BorderPane root = new BorderPane();
         root.setCenter(layout);
         root.setTop(btnBack);
-
-        // 📌 จัดตำแหน่งปุ่ม BACK ที่มุมซ้ายบน
         BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
-        BorderPane.setMargin(btnBack, new Insets(10)); // ตั้งระยะห่างจากขอบ
+        BorderPane.setMargin(btnBack, new Insets(10));
 
         // 🌄 เพิ่ม Background Image แบบเต็มหน้าจอ
         try {

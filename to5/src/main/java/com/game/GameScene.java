@@ -28,7 +28,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -48,6 +52,9 @@ public class GameScene {
     private Circle map2Portal;
     private Label notificationLabel; // แสดงข้อความชั่วคราว
     // +++++++++++++++
+    
+    // ตกแต่งกุ้งกิ้ง
+    Font font2 = Font.loadFont(getClass().getResourceAsStream("/Font/Kanit-Bold.ttf"), 20);
 
     private double characterX = 0, characterY = 0; // แก้ไขตรงนี้
 
@@ -84,35 +91,62 @@ public class GameScene {
         nameLabel.setTranslateY(characterY - 60);
 
         // ---------- Add ----------
+        // ปรับปรุงสไตล์ pointLabel ให้ดูสวยและชัดเจน
         pointLabel = new Label("Point: " + points);
-        pointLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-border-color: white; -fx-padding: 5px;");
-        // ---------- Add ----------
-
-        // ปุ่ม BACK
-        Button btnBack = new Button("BACK");
-        btnBack.setStyle(
+        pointLabel.setStyle(
             "-fx-font-size: 18px; " +
-            "-fx-background-color: rgb(80, 71, 255); " +
-            "-fx-text-fill: white; " +
-            "-fx-border-radius: 10px; " +
-            "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
-        btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
-
-        // ---------- Add ----------
-        Button btnSave = new Button("SAVE");
-        // ปรับปรุงสไตล์ของปุ่ม SAVE ด้วยสีฟ้าเพื่อให้ตัดกับพื้นหลังส้มน้ำตาล
-        btnSave.setStyle(
-            "-fx-font-size: 18px; " +
-            "-fx-background-color: linear-gradient(to right,#1e90ff, #00BFFF); " +
             "-fx-text-fill: white; " +
             "-fx-border-color: white; " +
+            "-fx-padding: 10px 20px; " +
+            "-fx-background-color: rgba(0, 0, 0, 0.5); " +
+            "-fx-background-radius: 15px;"
+        );
+        // ---------- Add ----------
+
+        // ปุ่ม BACK (ปรับสไตล์ให้เหมือนใน Tutorial)
+        Button btnBack = new Button("BACK");
+        String backDefaultStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +  // สีพื้นหลังปกติ
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +       // กรอบสีดำ
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
-        
+            "-fx-padding: 10 20;";
+        String backHoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +  // สีพื้นหลังเมื่อ hover
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnBack.setStyle(backDefaultStyle);
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(backHoverStyle));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(backDefaultStyle));
+        btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
+
+        // ปุ่ม SAVE (ปรับสไตล์ให้เหมือนใน Tutorial)
+        Button btnSave = new Button("SAVE");
+        String saveDefaultStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #8A2BE2; " +  // สีม่วงเข้ม
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        String saveHoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #9370DB; " +  // สีม่วงอ่อนเมื่อ hover
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnSave.setStyle(saveDefaultStyle);
+        btnSave.setOnMouseEntered(e -> btnSave.setStyle(saveHoverStyle));
+        btnSave.setOnMouseExited(e -> btnSave.setStyle(saveDefaultStyle));
         btnSave.setOnAction(e -> {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -159,18 +193,17 @@ public class GameScene {
                 ex.printStackTrace();
             }
         });
-        // ---------- Add ----------
 
-        // จัดวางปุ่มใน topPane โดยใช้ HBox และเพิ่ม padding
+        // จัดวางปุ่ม BACK และ SAVE ทางด้านซ้าย และ pointLabel ให้อยู่ทางด้านขวา
         HBox leftButtons = new HBox(10, btnBack, btnSave);
-        leftButtons.setAlignment(Pos.TOP_LEFT);
+        leftButtons.setAlignment(Pos.CENTER_LEFT);
+        
         BorderPane topPane = new BorderPane();
         topPane.setLeft(leftButtons);
-        topPane.setCenter(pointLabel);
-        BorderPane.setAlignment(pointLabel, Pos.TOP_CENTER);
+        topPane.setRight(pointLabel);
         topPane.setPadding(new Insets(10));
 
-        // สุ่มสร้าง Kiki 5 ตัว โดยใช้รูปจาก /assets/Kiki.png
+        // สุ่มสร้าง Kiki 5 ตัว โดยใช้รูปจาก /assets/kiki.png
         kikiSprites = new ImageView[5];
         Image kikiImage = new Image(getClass().getResourceAsStream("/assets/kiki.png"));
         for (int i = 0; i < 5; i++) {
@@ -184,15 +217,25 @@ public class GameScene {
             kikiSprites[i].setTranslateY(randomY);
         }
 
+        RadialGradient gradient = new RadialGradient(
+            0, 0,       // focusAngle, focusDistance
+            0.5, 0.5,   // centerX, centerY (ค่าสัมพัทธ์)
+            1,          // radius (ค่าสัมพัทธ์)
+            true,       // proportional (true = ใช้ค่าสัมพัทธ์)
+            CycleMethod.NO_CYCLE, 
+            new Stop(0, Color.YELLOW), 
+            new Stop(1, Color.ORANGE)
+        );
         // สร้าง Circle สำหรับไป Map2
-        map2Portal = new Circle(20, Color.ORANGE);
+        map2Portal = new Circle(20, gradient);
         // วางให้อยู่ทางซ้ายกึ่งกลางจอ (translateX ใกล้ MIN_X, translateY = 0)
         map2Portal.setTranslateX(-500 + 50); // เลื่อนจากขอบซ้ายเข้ามา 50
         map2Portal.setTranslateY(0);
 
-        // สร้าง Label แสดงข้อความ "Go to Map 2" ใกล้ circle
+        // สร้าง Label แสดงข้อความ "Go to Map 2" ใกล้ Circle
         Label map2Label = new Label("Go to Map 2");
-        map2Label.setTextFill(Color.ORANGE);
+        map2Label.setTextFill(Color.BROWN);
+        map2Label.setFont(font2);
         map2Label.setTranslateX(map2Portal.getTranslateX());
         map2Label.setTranslateY(map2Portal.getTranslateY() - 40);
 

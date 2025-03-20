@@ -28,7 +28,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -48,11 +52,15 @@ public class GameScene2 {
     private Circle backPortal;
     private Label notificationLabel;
 
+
+    //fo
+        Font font2 = Font.loadFont(getClass().getResourceAsStream("/Font/Kanit-Bold.ttf"), 20);
+
     public GameScene2(Stage stage, String characterName, String job, String characterImagePath, int initialPoints) {
         this.primaryStage = stage;
         this.points = initialPoints;
 
-        // โหลดภาพพื้นหลัง (เหมือนใน GameScene)
+        // โหลดภาพพื้นหลัง
         Image backgroundImage = new Image("/Background/4.png");
         BackgroundImage bgImage = new BackgroundImage(
             backgroundImage,
@@ -75,23 +83,54 @@ public class GameScene2 {
         nameLabel.setTranslateX(characterX);
         nameLabel.setTranslateY(characterY - 60);
 
+        // ตั้งค่า pointLabel ให้ดูสวยและชัดเจน
         pointLabel = new Label("Point: " + points);
         pointLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-border-color: white; -fx-padding: 5px;");
 
-        // ปุ่ม BACK
+        // ปุ่ม BACK (ปรับสไตล์ให้เหมือนใน Tutorial)
         Button btnBack = new Button("BACK");
-        btnBack.setStyle(
+        String backDefaultStyle = 
             "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF6347; " +
+            "-fx-background-color: #FF6347; " +  // สีพื้นหลังปกติ
             "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +       // กรอบสีดำ
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;"
-        );
+            "-fx-padding: 10 20;";
+        String backHoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +  // สีพื้นหลังเมื่อ hover
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnBack.setStyle(backDefaultStyle);
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(backHoverStyle));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(backDefaultStyle));
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
-        // ปุ่ม SAVE
+        // ปุ่ม SAVE (ปรับสไตล์ให้สวยขึ้น โดยใช้สีม่วง)
         Button btnSave = new Button("SAVE");
+        String saveDefaultStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #8A2BE2; " +  // สีม่วงเข้ม
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        String saveHoverStyle = 
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #9370DB; " +  // สีม่วงอ่อนเมื่อ hover
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20;";
+        btnSave.setStyle(saveDefaultStyle);
+        btnSave.setOnMouseEntered(e -> btnSave.setStyle(saveHoverStyle));
+        btnSave.setOnMouseExited(e -> btnSave.setStyle(saveDefaultStyle));
         btnSave.setOnAction(e -> {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -133,13 +172,13 @@ public class GameScene2 {
             }
         });
 
-        // จัดวางปุ่มใน topPane ตามแบบ GameScene
+        // จัดวางปุ่ม BACK กับ SAVE ทางด้านซ้าย และนำ pointLabel ไปวางด้านขวาใน topPane
         HBox leftButtons = new HBox(10, btnBack, btnSave);
-        leftButtons.setAlignment(Pos.TOP_LEFT);
+        leftButtons.setAlignment(Pos.CENTER_LEFT);
+        
         BorderPane topPane = new BorderPane();
         topPane.setLeft(leftButtons);
-        topPane.setCenter(pointLabel);
-        BorderPane.setAlignment(pointLabel, Pos.TOP_CENTER);
+        topPane.setRight(pointLabel);
         topPane.setPadding(new Insets(10));
 
         // สร้าง Kiki
@@ -154,26 +193,33 @@ public class GameScene2 {
             kikiSprites[i].setTranslateX(randomX);
             kikiSprites[i].setTranslateY(randomY);
         }
-
+         RadialGradient gradient = new RadialGradient(
+        0, 0,       // focusAngle, focusDistance
+        0.5, 0.5,   // centerX, centerY (ค่าสัมพัทธ์)
+        1,          // radius (ค่าสัมพัทธ์)
+        true,       // proportional (true = ใช้ค่าสัมพัทธ์)
+        CycleMethod.NO_CYCLE, 
+        new Stop(0, Color.BLACK), 
+        new Stop(1, Color.ORANGE)
+    );
+       
         // สร้าง Circle กลับไป Map1
-        backPortal = new Circle(20, Color.GREEN);
+        backPortal = new Circle(20, gradient);
         backPortal.setTranslateX(-500 + 50); 
         backPortal.setTranslateY(0);
 
         Label backLabel = new Label("Go back to Map 1");
-        backLabel.setTextFill(Color.GREEN);
+        backLabel.setTextFill(Color.ORANGE);
+        backLabel.setFont(font2);
         backLabel.setTranslateX(backPortal.getTranslateX());
         backLabel.setTranslateY(backPortal.getTranslateY() - 40);
 
         // สร้าง StackPane สำหรับจัดวางองค์ประกอบ (ตัวละคร, Kiki, portal, notificationLabel)
         StackPane centerPane = new StackPane();
-        // เพิ่ม Kiki
         for (ImageView kiki : kikiSprites) {
             centerPane.getChildren().add(kiki);
         }
-        // เพิ่ม portal และ label
         centerPane.getChildren().addAll(backPortal, backLabel);
-        // เพิ่มตัวละครและชื่อ
         centerPane.getChildren().add(characterSprite);
         centerPane.getChildren().add(nameLabel);
         centerPane.setAlignment(Pos.CENTER);
@@ -184,7 +230,6 @@ public class GameScene2 {
         centerPane.getChildren().add(notificationLabel);
         StackPane.setAlignment(notificationLabel, Pos.TOP_CENTER);
 
-        // สร้าง BorderPane หลัก และตั้งพื้นหลังด้วย BackgroundImage
         BorderPane layout = new BorderPane();
         layout.setTop(topPane);
         layout.setCenter(centerPane);

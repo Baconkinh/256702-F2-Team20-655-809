@@ -4,34 +4,41 @@
         "name": "A",
         "time": "2025/03/16 19:58:51",
         "job": "Archer",
-        "point": 0
+        "point": 500
     },
     {
         "img": "/assets/char2.png",
-        "name": "B",
+        "name": "GM",
         "time": "2025/03/16 19:59:07",
         "job": "Sword",
-        "point": 1000
+        "point": 9999999
     },
     {
         "img": "/assets/char3.png",
         "name": "C",
         "time": "2025/03/16 19:59:15",
         "job": "Tank",
-        "point": 9999999
+        "point": 30000
     },
     {
         "img": "/assets/char4.png",
         "name": "D",
         "time": "2025/03/16 19:59:21",
         "job": "Mage",
-        "point": 3000
+        "point": 50000
     },
     {
         "img": "/assets/char5.png",
         "name": "E",
         "time": "2025/03/16 19:59:29",
         "job": "Gunner",
-        "point": 0
+        "point": 1000
+    },
+    {
+        "img": "/assets/char3.png",
+        "name": "C",
+        "time": "2025/03/20 16:45:40",
+        "job": "Tank",
+        "point": 30000
     }
 ]
