@@ -40,5 +40,12 @@
         "time": "2025/03/20 16:45:40",
         "job": "Tank",
         "point": 30000
+    },
+    {
+        "img": "/assets/char4.png",
+        "name": "Nong Bank",
+        "time": "2025/03/24 15:49:50",
+        "job": "Mage",
+        "point": 100
     }
 ]

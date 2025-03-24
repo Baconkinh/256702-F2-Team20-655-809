@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -27,7 +28,7 @@ public class Tutorial {
     }
 
     public void showTutorialScene() {
-        // 🔹 โหลดรูปภาพพื้นหลัง
+        // โหลดรูปภาพพื้นหลัง
         Image backgroundImage = new Image("Background/1.jpg");
         BackgroundImage bgImage = new BackgroundImage(
             backgroundImage,
@@ -37,85 +38,103 @@ public class Tutorial {
             new BackgroundSize(1100, 790, false, false, false, false)
         );
 
-        // 🎨 ตั้งค่าพื้นหลัง
         BorderPane root = new BorderPane();
         root.setBackground(new Background(bgImage));
 
-        // 🏆 หัวข้อ "Tutorial"
-        Label creditTitle = new Label("Tutorial");
-        creditTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
+        // หัวข้อ Tutorial
+        Label tutorialTitle = new Label("Tutorial");
+        tutorialTitle.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label name1 = new Label("1. ตั้งชื่อและเลือกตัวละครแต่ละตัวที่ต้องการเล่นแล้วกดเริ่ม");
-        Label name2 = new Label("2. เดินไปหามอนสเตอร์ที่สามารถสู้ได้");
-        Label name3 = new Label("3. กดสกิลที่ต้องการใช้และต้องมีManaที่เพียงพอถึงจะใช้ได้ \nเมื่อจบ 1 เทิร์น ฝ่ายที่จบจะได้ 1 Mana");
-        Label name4 = new Label("4. เมื่อฝ่ายไหน Hp น้อยกว่าหรือเท่ากับ 0 ฝ่ายนั้นจะเป็นผู้แพ้ \nและอีกฝ่ายจะเป็นผู้ชนะ");
-        Label name5 = new Label("5. หากชนะมอนสเตอร์ได้จะได้รับแต้มเพื่อปลดล็อค\nมอนสเตอร์ตัวถัดไป");
+        // คำอธิบายกติกาการเล่น
+        Label[] tutorialTexts = {
+            new Label("1. ตั้งชื่อและเลือกตัวละครที่ต้องการเล่นแล้วกดเริ่ม"),
+            new Label("2. เดินไปหามอนสเตอร์ที่สามารถสู้ได้"),
+            new Label("3. กดสกิลที่ต้องการใช้และต้องมี Mana ที่เพียงพอถึงจะใช้ได้"),
+            new Label("   เมื่อจบ 1 เทิร์น ฝ่ายที่จบจะได้ 1 Mana"),
+            new Label("4. เมื่อฝ่ายไหน HP น้อยกว่าหรือเท่ากับ 0 ฝ่ายนั้นจะแพ้"),
+            new Label("   และอีกฝ่ายจะเป็นผู้ชนะ"),
+            new Label("5. หากชนะมอนสเตอร์ได้จะได้รับแต้มเพื่อปลดล็อคมอนสเตอร์ตัวถัดไป")
+        };
+        for (Label label : tutorialTexts) {
+            label.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        }
 
-        name1.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
-        name2.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
-        name3.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
-        name4.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
-        name5.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+        VBox tutorialBox = new VBox(10, tutorialTexts);
+        tutorialBox.setAlignment(Pos.CENTER);
+        tutorialBox.setPadding(new Insets(20, 20, 20, 30));
 
-        VBox creditBox = new VBox(10, name1, name2, name3, name4, name5);
-        creditBox.setAlignment(Pos.CENTER_LEFT);
-        creditBox.setPadding(new Insets(45, 0, 0, 340));
+        // กรอบข้อความสีดำโปร่งใส
+        StackPane textContainer = new StackPane();
+        Rectangle textBackground = new Rectangle(600, 300);
+        textBackground.setFill(Color.rgb(0, 0, 0, 0.7));
+        textBackground.setStroke(Color.WHITE);
+        textBackground.setStrokeWidth(3);
+        textBackground.setArcWidth(30);
+        textBackground.setArcHeight(30);
+        textBackground.setEffect(new DropShadow(20, Color.BLACK));
 
-        VBox creditBox1 = new VBox(10, creditTitle);
-        creditBox1.setAlignment(Pos.CENTER_LEFT);
-        creditBox1.setPadding(new Insets(0, 0, 300, 475));
+        textContainer.getChildren().addAll(textBackground, tutorialBox);
+        textContainer.setAlignment(Pos.TOP_CENTER);
+        textContainer.setPadding(new Insets(30, 0, 0, 0));
 
-        // 🎨 ใส่กรอบสี่เหลี่ยมสวยงาม
-        StackPane creditContainer = new StackPane();
-        creditContainer.getChildren().addAll(createBackgroundBox(), creditBox, creditBox1);
-        creditContainer.setAlignment(Pos.CENTER);
+        // โหลดและแสดงรูปภาพด้านล่าง
+        ImageView infoImage = new ImageView(new Image("Background/info.png"));
+        infoImage.setFitWidth(450);
+        infoImage.setPreserveRatio(true);
 
-        // 🔙 ปุ่มกลับไปเมนูหลัก พร้อมปรับปรุงสไตล์ให้มีกรอบสีดำและเปลี่ยนสีเมื่อ hover
+        StackPane imageContainer = new StackPane(infoImage);
+        imageContainer.setAlignment(Pos.BOTTOM_CENTER);
+        imageContainer.setPadding(new Insets(0, 0, 30, 0));
+
+        // ปุ่ม BACK อยู่ด้านบนซ้าย
         Button btnBack = new Button("BACK");
-        String defaultStyle = 
+        btnBack.setStyle(
             "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF6347; " +  // สีพื้นหลังปกติ
-            "-fx-text-fill: white; " +
-            "-fx-border-color: black; " +       // กรอบสีดำ
-            "-fx-border-radius: 10px; " +
-            "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;";
-        String hoverStyle = 
-            "-fx-font-size: 18px; " +
-            "-fx-background-color: #FF4500; " +  // สีพื้นหลังเมื่อ hover
+            "-fx-background-color: #FF6347; " +
             "-fx-text-fill: white; " +
             "-fx-border-color: black; " +
             "-fx-border-radius: 10px; " +
             "-fx-background-radius: 10px; " +
-            "-fx-padding: 10 20;";
-        btnBack.setStyle(defaultStyle);
-        btnBack.setOnMouseEntered(e -> btnBack.setStyle(hoverStyle));
-        btnBack.setOnMouseExited(e -> btnBack.setStyle(defaultStyle));
+            "-fx-padding: 10 20; " +
+            "-fx-scale-x: 1.0; " +
+            "-fx-scale-y: 1.0;"
+        );
+        btnBack.setOnMouseEntered(e -> btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF4500; " +
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20; " +
+            "-fx-scale-x: 1.0; " +
+            "-fx-scale-y: 1.0;"
+        ));
+        btnBack.setOnMouseExited(e -> btnBack.setStyle(
+            "-fx-font-size: 18px; " +
+            "-fx-background-color: #FF6347; " +
+            "-fx-text-fill: white; " +
+            "-fx-border-color: black; " +
+            "-fx-border-radius: 10px; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-padding: 10 20; " +
+            "-fx-scale-x: 1.0; " +
+            "-fx-scale-y: 1.0;"
+        ));
         btnBack.setOnAction(e -> new MainMenu(primaryStage).showMainMenu());
 
-        root.setCenter(creditContainer);
-        root.setTop(btnBack);
         BorderPane.setAlignment(btnBack, Pos.TOP_LEFT);
         BorderPane.setMargin(btnBack, new Insets(10));
 
-        // 📺 แสดง Scene
+        // จัดองค์ประกอบทั้งหมดเข้าด้วยกัน
+        VBox content = new VBox(10, textContainer, imageContainer);
+        content.setAlignment(Pos.CENTER);
+
+        root.setTop(btnBack);
+        root.setCenter(content);
+
+        // แสดง Scene
         Scene tutorialScene = new Scene(root, 1100, 790);
         primaryStage.setScene(tutorialScene);
-    }
-
-    // 🔹 ฟังก์ชันสร้างกรอบสี่เหลี่ยม
-    private StackPane createBackgroundBox() {
-        Rectangle backgroundBox = new Rectangle(500, 450);
-        backgroundBox.setFill(Color.rgb(0, 0, 0, 0.7)); // พื้นหลังสีดำโปร่งแสง
-        backgroundBox.setStroke(Color.WHITE);
-        backgroundBox.setStrokeWidth(3);
-        backgroundBox.setArcWidth(30); // ขอบมน
-        backgroundBox.setArcHeight(30);
-
-        // ✨ เพิ่มเงาให้กรอบ
-        DropShadow boxShadow = new DropShadow(20, Color.BLACK);
-        backgroundBox.setEffect(boxShadow);
-
-        return new StackPane(backgroundBox);
     }
 }

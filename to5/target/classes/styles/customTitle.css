@@ -1,0 +1,14 @@
+/* customTitle.css */
+.root {
+    -fx-background-radius: 5;
+}
+
+/* สำหรับสีของแถบชื่อเรื่อง (ทำงานบนบางระบบปฏิบัติการเท่านั้น) */
+.decoration-title-pane {
+    -fx-background-color: #4B0082; /* สีม่วงเข้ม (Indigo) */
+}
+
+/* สำหรับสีข้อความในแถบชื่อเรื่อง */
+.decoration-title-pane .title {
+    -fx-text-fill: white;
+}
