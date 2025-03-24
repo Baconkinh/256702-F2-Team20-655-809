@@ -70,7 +70,7 @@ public class Tutorial {
         textBackground.setStroke(Color.WHITE);
         textBackground.setStrokeWidth(3);
         textBackground.setArcWidth(30);
-        textBackground.setArcHeight(30);
+        textBackground.setArcHeight(25);
         textBackground.setEffect(new DropShadow(20, Color.BLACK));
 
         textContainer.getChildren().addAll(textBackground, tutorialBox);
@@ -79,7 +79,7 @@ public class Tutorial {
 
         // โหลดและแสดงรูปภาพด้านล่าง
         ImageView infoImage = new ImageView(new Image("Background/info.png"));
-        infoImage.setFitWidth(450);
+        infoImage.setFitWidth(550);
         infoImage.setPreserveRatio(true);
 
         StackPane imageContainer = new StackPane(infoImage);
@@ -127,7 +127,7 @@ public class Tutorial {
         BorderPane.setMargin(btnBack, new Insets(10));
 
         // จัดองค์ประกอบทั้งหมดเข้าด้วยกัน
-        VBox content = new VBox(10, textContainer, imageContainer);
+        VBox content = new VBox(5, textContainer, imageContainer);
         content.setAlignment(Pos.CENTER);
 
         root.setTop(btnBack);
