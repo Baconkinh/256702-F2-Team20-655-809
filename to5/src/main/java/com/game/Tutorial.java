@@ -61,11 +61,11 @@ public class Tutorial {
 
         VBox tutorialBox = new VBox(10, tutorialTexts);
         tutorialBox.setAlignment(Pos.CENTER);
-        tutorialBox.setPadding(new Insets(20, 20, 20, 30));
+        tutorialBox.setPadding(new Insets(8, 20, 8, 30));
 
         // กรอบข้อความสีดำโปร่งใส
         StackPane textContainer = new StackPane();
-        Rectangle textBackground = new Rectangle(600, 300);
+        Rectangle textBackground = new Rectangle(600, 280);
         textBackground.setFill(Color.rgb(0, 0, 0, 0.7));
         textBackground.setStroke(Color.WHITE);
         textBackground.setStrokeWidth(3);
@@ -79,12 +79,12 @@ public class Tutorial {
 
         // โหลดและแสดงรูปภาพด้านล่าง
         ImageView infoImage = new ImageView(new Image("Background/info.png"));
-        infoImage.setFitWidth(550);
+        infoImage.setFitWidth(625);
         infoImage.setPreserveRatio(true);
 
         StackPane imageContainer = new StackPane(infoImage);
         imageContainer.setAlignment(Pos.BOTTOM_CENTER);
-        imageContainer.setPadding(new Insets(0, 0, 30, 0));
+        imageContainer.setPadding(new Insets(-28, 0, 30, 0));
 
         // ปุ่ม BACK อยู่ด้านบนซ้าย
         Button btnBack = new Button("BACK");
