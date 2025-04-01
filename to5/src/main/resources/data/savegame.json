@@ -47,5 +47,12 @@
         "time": "2025/03/24 15:49:50",
         "job": "Mage",
         "point": 100
+    },
+    {
+        "img": "/assets/char3.png",
+        "name": "C",
+        "time": "2025/04/01 22:10:09",
+        "job": "Tank",
+        "point": 30000
     }
 ]
